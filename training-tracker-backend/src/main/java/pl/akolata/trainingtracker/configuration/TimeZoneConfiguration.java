@@ -1,12 +1,12 @@
 package pl.akolata.trainingtracker.configuration;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.TimeZone;
 
 @Configuration
-@Log4j2
+@Slf4j
 public class TimeZoneConfiguration {
 
     private static final TimeZone TIMEZONE_UTC = TimeZone.getTimeZone("UTC");
