@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.akolata.trainingtracker.domain.user.entity.User;
-import pl.akolata.trainingtracker.domain.user.entity.UserAccountDetails;
+import pl.akolata.trainingtracker.user.User;
+import pl.akolata.trainingtracker.user.UserAccountDetails;
 
 import java.util.Collection;
 import java.util.List;

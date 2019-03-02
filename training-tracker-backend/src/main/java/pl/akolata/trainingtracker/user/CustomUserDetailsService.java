@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.domain.user.service;
+package pl.akolata.trainingtracker.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.akolata.trainingtracker.domain.user.entity.User;
-import pl.akolata.trainingtracker.domain.user.repository.UserRepository;
 import pl.akolata.trainingtracker.security.UserPrincipal;
 
 @Service

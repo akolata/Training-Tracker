@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.akolata.trainingtracker.domain.user.entity.Role;
-import pl.akolata.trainingtracker.domain.user.entity.User;
-import pl.akolata.trainingtracker.domain.user.model.RoleName;
-import pl.akolata.trainingtracker.domain.user.repository.RoleRepository;
-import pl.akolata.trainingtracker.domain.user.repository.UserRepository;
+import pl.akolata.trainingtracker.user.Role;
+import pl.akolata.trainingtracker.user.User;
+import pl.akolata.trainingtracker.user.RoleName;
+import pl.akolata.trainingtracker.user.RoleRepository;
+import pl.akolata.trainingtracker.user.UserRepository;
 import pl.akolata.trainingtracker.security.JwtTokenProvider;
 
 import javax.validation.Valid;

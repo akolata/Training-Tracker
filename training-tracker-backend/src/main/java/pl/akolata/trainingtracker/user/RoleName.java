@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.domain.user.model;
+package pl.akolata.trainingtracker.user;
 
 public enum RoleName {
     ROLE_USER,

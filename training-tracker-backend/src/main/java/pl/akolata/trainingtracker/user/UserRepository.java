@@ -1,8 +1,7 @@
-package pl.akolata.trainingtracker.domain.user.repository;
+package pl.akolata.trainingtracker.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.akolata.trainingtracker.domain.user.entity.User;
 
 import java.util.List;
 import java.util.Optional;

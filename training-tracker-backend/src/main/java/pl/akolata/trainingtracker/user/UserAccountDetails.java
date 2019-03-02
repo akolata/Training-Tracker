@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.domain.user.entity;
+package pl.akolata.trainingtracker.user;
 
 import lombok.*;
 
