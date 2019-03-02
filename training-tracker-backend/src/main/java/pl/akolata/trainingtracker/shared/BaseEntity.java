@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.entity;
+package pl.akolata.trainingtracker.shared;
 
 import lombok.Getter;
 import lombok.Setter;

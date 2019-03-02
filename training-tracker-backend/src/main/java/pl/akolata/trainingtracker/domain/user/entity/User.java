@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import pl.akolata.trainingtracker.entity.BaseEntity;
+import pl.akolata.trainingtracker.shared.BaseEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;

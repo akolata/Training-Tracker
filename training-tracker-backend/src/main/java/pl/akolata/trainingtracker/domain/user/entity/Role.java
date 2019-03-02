@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.akolata.trainingtracker.domain.user.model.RoleName;
-import pl.akolata.trainingtracker.entity.BaseEntity;
+import pl.akolata.trainingtracker.shared.BaseEntity;
 
 import javax.persistence.*;
 
