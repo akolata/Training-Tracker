@@ -47,6 +47,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Embedded
+    private UserAccountDetails userAccountDetails;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -56,18 +59,12 @@ public class User extends BaseEntity {
             inverseForeignKey = @ForeignKey(name = "FK_roles_users"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
     public User(String firstName, String lastName, String username, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.userAccountDetails = new UserAccountDetails(false, false, false, true);
     }
 }
