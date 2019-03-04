@@ -6,7 +6,10 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.akolata.trainingtracker.shared.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
@@ -16,12 +19,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Role extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Enumerated(EnumType.STRING)
-    @Column
     private RoleName name;
 
     public Role(RoleName name) {
