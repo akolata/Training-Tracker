@@ -13,10 +13,6 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-   // testImplementation.exclude group: 'junit', module: 'junit'
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
