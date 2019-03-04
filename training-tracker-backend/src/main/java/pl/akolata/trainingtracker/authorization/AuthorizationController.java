@@ -1,5 +1,6 @@
 package pl.akolata.trainingtracker.authorization;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api/auth")
+@Slf4j
 public class AuthorizationController {
 
     private final AuthorizationUserService userService;
@@ -51,6 +53,7 @@ public class AuthorizationController {
     @PostMapping("/sign-up")
     public ResponseEntity<ApiResponse<String>> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws UserRegistrationFailureException {
         User user = userService.registerUser(signUpRequest);
+        log.debug("User with email {} and username {} registered", user.getEmail(), user.getUsername());
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")

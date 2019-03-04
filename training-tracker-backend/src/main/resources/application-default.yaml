@@ -1,28 +1,5 @@
 spring:
   application:
     name: training-tracker
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-  datasource:
-    url: jdbc:mysql://localhost:3306/training-tracker?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
-    username: training-tracker-app
-    password: password
 server:
   port: 8080
-logging:
-  level:
-    pl.akolata.trainingtracker: debug
-    org:
-      hibernate:
-        SQL: debug
-        persister:
-          entity: trace
-        type: trace
-app:
-  jwtSecret: JWTSuperSecretKey
-  jwtExpirationInMs: 604800000

@@ -2,3 +2,27 @@ spring:
   profiles:
     include: default
     active: dev
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/training-tracker?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: ${TRAINING_TRACKER_USER}
+    password: ${TRAINING_TRACKER_PASSWORD}
+logging:
+  level:
+    pl.akolata.trainingtracker: debug
+    org:
+      hibernate:
+        SQL: debug
+        persister:
+          entity: trace
+        type: trace
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
