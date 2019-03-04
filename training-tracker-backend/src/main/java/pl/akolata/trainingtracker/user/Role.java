@@ -6,13 +6,13 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.akolata.trainingtracker.shared.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(
+        name = "roles",
+        uniqueConstraints = {@UniqueConstraint(name = "UK_NAME", columnNames = "name")}
+)
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -20,9 +20,10 @@ import javax.persistence.Table;
 public class Role extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
     private RoleName name;
 
-    public Role(RoleName name) {
+    Role(RoleName name) {
         this.name = name;
     }
 }
