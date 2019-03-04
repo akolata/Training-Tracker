@@ -12,11 +12,16 @@ import java.util.Date;
 @Slf4j
 public class JwtTokenProvider {
 
-    @Value("${app.jwtSecret}")
     private String jwtSecret;
-
-    @Value("${app.jwtExpirationInMs}")
     private int jwtExpirationInMs;
+
+    public JwtTokenProvider(
+            @Value("${app.jwtSecret}") String jwtSecret,
+            @Value("${app.jwtExpirationInMs}") int jwtExpirationInMs
+    ) {
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationInMs = jwtExpirationInMs;
+    }
 
     public String generateToken(Authentication authentication) {
 
@@ -33,7 +38,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Long getUserIdFromJWT(String token) {
+    Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
@@ -42,7 +47,7 @@ public class JwtTokenProvider {
         return Long.parseLong(claims.getSubject());
     }
 
-    public boolean validateToken(String authToken) {
+    boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;

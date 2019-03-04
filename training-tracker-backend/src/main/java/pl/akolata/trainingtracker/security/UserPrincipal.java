@@ -57,19 +57,19 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(user, authorities);
     }
 
-    public Long getId() {
+    Long getId() {
         return id;
     }
 
-    public String getFirstName() {
+    String getFirstName() {
         return firstName;
     }
 
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
