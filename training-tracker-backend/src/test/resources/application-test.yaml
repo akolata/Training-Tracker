@@ -1,0 +1,12 @@
+app:
+  jwtSecret: JWT-test-secret
+  jwtExpirationInMs: 604800000
+logging:
+  level:
+    pl.akolata.trainingtracker: debug
+    org:
+      hibernate:
+        SQL: debug
+        persister:
+          entity: trace
+        type: trace

@@ -25,6 +25,7 @@ public class BaseEntity implements Serializable {
     private Long id;
 
     @Version
+    @Getter
     private Timestamp version;
 
     @CreatedDate
