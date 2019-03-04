@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.security.controller;
+package pl.akolata.trainingtracker.shared;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

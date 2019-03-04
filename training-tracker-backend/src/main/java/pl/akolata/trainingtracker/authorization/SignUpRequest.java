@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.security.controller;
+package pl.akolata.trainingtracker.authorization;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-public class SignUpRequest {
+class SignUpRequest {
 
     @NotBlank
     @Size(min = 4, max = 40)

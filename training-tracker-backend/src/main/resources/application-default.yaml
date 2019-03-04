@@ -17,7 +17,12 @@ server:
 logging:
   level:
     pl.akolata.trainingtracker: debug
-    org.hibernate.SQL: debug
+    org:
+      hibernate:
+        SQL: debug
+        persister:
+          entity: trace
+        type: trace
 app:
   jwtSecret: JWTSuperSecretKey
   jwtExpirationInMs: 604800000

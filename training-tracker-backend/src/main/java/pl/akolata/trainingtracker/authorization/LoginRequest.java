@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.security.controller;
+package pl.akolata.trainingtracker.authorization;
 
 import lombok.Data;
 
