@@ -31,12 +31,12 @@ public class UserPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    UserPrincipal(User user, Collection<? extends GrantedAuthority> authorities) {
+    private UserPrincipal(User user, Collection<? extends GrantedAuthority> authorities) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.username = user.getUsername();
-        this.email = user.getUsername();
+        this.email = user.getEmail();
         this.password = user.getPassword();
         this.authorities = authorities;
 
