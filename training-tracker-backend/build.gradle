@@ -14,7 +14,7 @@ repositories {
 }
 
 configurations {
-    testImplementation.exclude group: 'junit', module: 'junit'
+   // testImplementation.exclude group: 'junit', module: 'junit'
 }
 
 dependencies {
@@ -33,5 +33,6 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.platform:junit-platform-runner'
     testImplementation 'com.h2database:h2:1.4.198'
 }

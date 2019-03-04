@@ -1,18 +1,17 @@
 package pl.akolata.trainingtracker.user;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.akolata.trainingtracker.BaseJpaTest;
+import pl.akolata.trainingtracker.Tags;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class DatabaseUserDetailsServiceIntegrationTest extends BaseJpaTest {
+@Tag(Tags.INTEGRATION)
+class DatabaseUserDetailsServiceTest extends BaseJpaTest {
 
     @Autowired
     private DatabaseUserDetailsService userDetailsService;

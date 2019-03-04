@@ -1,18 +1,17 @@
 package pl.akolata.trainingtracker.user;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import pl.akolata.trainingtracker.BaseJpaTest;
+import pl.akolata.trainingtracker.Tags;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RoleRepositoryIntegrationTest extends BaseJpaTest {
+@Tag(Tags.INTEGRATION)
+class RoleRepositoryTest extends BaseJpaTest {
 
     @Autowired
     private RoleRepository roleRepository;

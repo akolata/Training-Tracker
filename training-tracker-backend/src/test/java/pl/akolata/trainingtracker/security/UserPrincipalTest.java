@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @Tag(Tags.UNIT)
-class UserPrincipalUnitTest {
+class UserPrincipalTest {
 
     @Test
     @DisplayName("should create user principal from user entity")
