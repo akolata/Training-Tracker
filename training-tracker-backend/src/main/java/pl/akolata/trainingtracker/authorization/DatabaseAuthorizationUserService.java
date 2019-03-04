@@ -29,18 +29,21 @@ public class DatabaseAuthorizationUserService implements AuthorizationUserServic
     }
 
     @Override
-    public Boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public Boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
-    public User registerUser(SignUpRequest signUpRequest) {
+    public User registerUser(SignUpRequest signUpRequest) throws UserRegistrationFailureException {
+
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            throw new UserRegistrationFailureException("Username is already taken!");
+        }
+
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            throw new UserRegistrationFailureException("Email already in use!");
+        }
+
+        return userRepository.saveAndFlush(createUser(signUpRequest));
+    }
+
+    private User createUser(SignUpRequest signUpRequest) {
         User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword());
 
@@ -52,6 +55,6 @@ public class DatabaseAuthorizationUserService implements AuthorizationUserServic
 
         user.setRoles(Collections.singleton(userRole));
 
-        return userRepository.saveAndFlush(user);
+        return user;
     }
 }

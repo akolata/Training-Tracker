@@ -6,10 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.akolata.trainingtracker.security.JwtTokenProvider;
 import pl.akolata.trainingtracker.shared.ApiResponse;
@@ -38,7 +35,6 @@ public class AuthorizationController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -47,26 +43,13 @@ public class AuthorizationController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = tokenProvider.generateToken(authentication);
+
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<ApiResponse<String>> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-
-        if (userService.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new ApiResponse<>(false, "Username is already taken!"));
-        }
-
-        if (userService.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new ApiResponse<>(false, "Email Address already in use!"));
-        }
-
+    public ResponseEntity<ApiResponse<String>> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws UserRegistrationFailureException {
         User user = userService.registerUser(signUpRequest);
 
         URI location = ServletUriComponentsBuilder
@@ -77,4 +60,12 @@ public class AuthorizationController {
                 .created(location)
                 .body(new ApiResponse<>(true, "User registered successfully"));
     }
+
+    @ExceptionHandler(value = UserRegistrationFailureException.class)
+    private ResponseEntity<ApiResponse<String>> handleRegistrationFailure(UserRegistrationFailureException e) {
+        return ResponseEntity
+                .badRequest()
+                .body(new ApiResponse<>(false, e.getMessage()));
+    }
+
 }
