@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import pl.akolata.trainingtracker.BaseJpaTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class RoleRepositoryIntegrationTest extends BaseJpaTest {
 
@@ -52,6 +53,22 @@ class RoleRepositoryIntegrationTest extends BaseJpaTest {
         assertNotNull(role.getUpdatedAt());
         assertNotNull(role.getCreatedAt());
         assertNotNull(role.getVersion());
+    }
+
+    @Test
+    @DisplayName("should find a role by name if one exists")
+    void testFindByName() {
+        // given
+        RoleName roleName = RoleName.ROLE_USER;
+        Role role = new Role(roleName);
+        role = roleRepository.saveAndFlush(role);
+
+        // when
+        Optional<Role> byExistingName = roleRepository.findByName(roleName);
+
+        // then
+        assertTrue(byExistingName.isPresent());
+        assertEquals(role, byExistingName.get());
     }
 
     @BeforeEach
