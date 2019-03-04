@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag(Tags.INTEGRATION)
-class TrainingTrackerApplicationIntegrationTest extends IntegrationTestBase {
+class TrainingTrackerApplicationTest extends IntegrationTestBase {
 
     @Test
     @DisplayName("Spring context should load")
