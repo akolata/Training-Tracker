@@ -169,6 +169,30 @@ class UserRepositoryIntegrationTest extends BaseJpaTest {
         assertFalse(byNotExistingParams.isPresent());
     }
 
+    @Test
+    @DisplayName("should not allow to save user with existing username")
+    void save_whenUsermameIsNotUnique_shouldThrowException() {
+        // given
+        User user = createUser(USERNAME, EMAIL);
+        User userWithTheSameUsername = createUser(USERNAME, "OTHER" + EMAIL);
+        userRepository.saveAndFlush(user);
+
+        // when
+        assertThrows(DataIntegrityViolationException.class, () -> userRepository.saveAndFlush(userWithTheSameUsername));
+    }
+
+    @Test
+    @DisplayName("should not allow to save user with existing email")
+    void save_whenEmailIsNotUnique_shouldThrowException() {
+        // given
+        User user = createUser(USERNAME, EMAIL);
+        User userWithTheSameUsername = createUser("OTHER" + USERNAME, EMAIL);
+        userRepository.saveAndFlush(user);
+
+        // when
+        assertThrows(DataIntegrityViolationException.class, () -> userRepository.saveAndFlush(userWithTheSameUsername));
+    }
+
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
