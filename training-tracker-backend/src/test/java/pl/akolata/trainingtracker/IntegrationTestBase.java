@@ -11,5 +11,5 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ActiveProfiles(profiles = {"test"})
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @ExtendWith(SpringExtension.class)
-abstract class IntegrationTestBase {
+public abstract class IntegrationTestBase {
 }
