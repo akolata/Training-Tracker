@@ -5,6 +5,7 @@
 build/
 
 !gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 ### Eclipse template
 .metadata
