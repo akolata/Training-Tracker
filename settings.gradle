@@ -1,2 +1,4 @@
 rootProject.name = 'training-tracker'
 
+include 'training-tracker-backend'
+

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: training-tracker
+server:
+  port: 8080
