@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
-import {AuthModule} from "../auth.module";
 
-@Injectable({
-  providedIn: AuthModule
-})
+@Injectable()
 export class AuthService {
 
   constructor() {

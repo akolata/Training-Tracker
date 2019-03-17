@@ -1,6 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SideNavComponent} from './side-nav.component';
+import {MaterialModule} from "../../../material.module";
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
@@ -8,7 +9,8 @@ describe('SideNavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SideNavComponent]
+      declarations: [SideNavComponent],
+      imports: [MaterialModule]
     })
       .compileComponents();
   }));
