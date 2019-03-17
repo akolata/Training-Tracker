@@ -10,6 +10,10 @@ mat-sidenav {
   width: 25vw;
 }
 
+#hamburger {
+  display: none;
+}
+
 a {
   text-decoration: none;
   color: white;
@@ -28,5 +32,15 @@ a {
   &__nav {
     display: flex;
     margin-left: auto;
+  }
+}
+
+@media all and (max-width: $max-width-xs) {
+  .toolbar-container__nav {
+    display: none;
+  }
+
+  #hamburger {
+    display: inline-block;
   }
 }
