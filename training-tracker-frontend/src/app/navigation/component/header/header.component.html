@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <div class="toolbar-container">
+    <button id="hamburger" mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div routerLink="/">LOGO</div>
+    <div class="toolbar-container__nav">
+      <a routerLink="/auth/sign-up">Sign Up</a>
+      <a routerLink="/auth/sign-in">Sign In</a>
+    </div>
+  </div>
+</mat-toolbar>

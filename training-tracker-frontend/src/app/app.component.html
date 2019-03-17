@@ -1,23 +1,9 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav role="navigation">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/auth/sign-up" (click)="sidenav.close()">Sign Up</a>
-      <a mat-list-item routerLink="/auth/sign-in" (click)="sidenav.close()">Sign In</a>
-    </mat-nav-list>
+    <app-side-nav (closeSidenav)="sidenav.close()"></app-side-nav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <div class="toolbar-container">
-        <button id="hamburger" mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <div routerLink="/">LOGO</div>
-        <div class="toolbar-container__nav">
-          <a routerLink="/auth/sign-up">Sign Up</a>
-          <a routerLink="/auth/sign-in">Sign In</a>
-        </div>
-      </div>
-    </mat-toolbar>
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
     <main>
       <router-outlet></router-outlet>
     </main>

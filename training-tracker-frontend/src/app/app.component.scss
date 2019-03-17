@@ -1,5 +1,3 @@
-@import '../vars';
-
 mat-sidenav-container,
 mat-sidenav-content,
 mat-sidenav {
@@ -11,39 +9,4 @@ mat-sidenav {
   font-size: 1.6rem;
   background-color: #673ab7;
   color: white;
-}
-
-#hamburger {
-  display: none;
-}
-
-a {
-  text-decoration: none;
-  color: white !important;
-  margin-right: 1rem;
-
-  &:hover,
-  &:active {
-    color: lightgray;
-  }
-}
-
-.toolbar-container {
-  display: flex;
-  width: 100%;
-
-  &__nav {
-    display: flex;
-    margin-left: auto;
-  }
-}
-
-@media all and (max-width: $max-width-xs) {
-  .toolbar-container__nav {
-    display: none;
-  }
-
-  #hamburger {
-    display: inline-block;
-  }
 }
