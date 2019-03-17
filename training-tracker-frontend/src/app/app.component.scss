@@ -1,0 +1,32 @@
+@import '../vars';
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 25vw;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  margin-right: 1rem;
+
+  &:hover,
+  &:active {
+    color: lightgray;
+  }
+}
+
+.toolbar-container {
+  display: flex;
+  width: 100%;
+
+  &__nav {
+    display: flex;
+    margin-left: auto;
+  }
+}

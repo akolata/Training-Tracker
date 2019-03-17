@@ -1,1 +1,11 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+html, body {
+  font-size: 62.5%;
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
