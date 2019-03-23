@@ -5,6 +5,7 @@ import {AuthRoutingModule} from './auth-routing.module';
 import {SignUpComponent} from './component/sign-up/sign-up.component';
 import {SignInComponent} from './component/sign-in/sign-in.component';
 import {AuthService} from "./service/auth.service";
+import {MaterialModule} from "../material.module";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {AuthService} from "./service/auth.service";
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    MaterialModule
   ],
   providers: [
     AuthService

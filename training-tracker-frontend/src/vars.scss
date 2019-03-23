@@ -2,3 +2,6 @@ $font-size: 2rem;
 $max-width-xs: 599px;
 $max-width-sm: 959px;
 $max-width-md: 1279px;
+
+$menu-height: 64px;
+$full-screen-height: calc(100vh - #{$menu-height});
