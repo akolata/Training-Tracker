@@ -1,0 +1,41 @@
+@import '../../../../vars';
+
+a {
+  text-decoration: none;
+  color: white;
+  margin-right: 1rem;
+
+  &:hover,
+  &:active {
+    color: lightgray;
+  }
+}
+
+mat-toolbar {
+  height: $menu-height;
+}
+
+.toolbar-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  &__nav {
+    display: flex;
+    margin-left: auto;
+  }
+}
+
+#hamburger {
+  display: none;
+}
+
+@media all and (max-width: $max-width-xs) {
+  .toolbar-container__nav {
+    display: none;
+  }
+
+  #hamburger {
+    display: inline-block;
+  }
+}
