@@ -4,30 +4,33 @@
     <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
       <mat-form-field>
         <input matInput placeholder="First name" [formControlName]="signUpFormConfig.CONTROL_FIRST_NAME">
-        <mat-error *ngIf="showRequiredValidationMsg(signUpForm, signUpFormConfig.CONTROL_FIRST_NAME)">First name is required</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_FIRST_NAME, 'minlength')">First name should has at least 2 characters</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_FIRST_NAME, 'maxlength')">First name should has maximum 40 characters</mat-error>
+        <mat-error *ngIf="signUpFormConfig.showErrorMsg(signUpForm, signUpFormConfig.CONTROL_FIRST_NAME)">
+          {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_FIRST_NAME)}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Last name" [formControlName]="signUpFormConfig.CONTROL_LAST_NAME">
-        <mat-error *ngIf="showRequiredValidationMsg(signUpForm, signUpFormConfig.CONTROL_LAST_NAME)">Last name is required</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_LAST_NAME, 'minlength')">Last name should has at least 2 characters</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_LAST_NAME, 'maxlength')">Last name should has maximum 40 characters</mat-error>
+        <mat-error *ngIf="signUpFormConfig.showErrorMsg(signUpForm, signUpFormConfig.CONTROL_LAST_NAME)">
+          {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_LAST_NAME)}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Username" [formControlName]="signUpFormConfig.CONTROL_USERNAME">
-        <mat-error *ngIf="showRequiredValidationMsg(signUpForm, signUpFormConfig.CONTROL_USERNAME)">Username is required</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_USERNAME, 'minlength')">Username should has at least 2 characters</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_USERNAME, 'maxlength')">Username should has maximum 40 characters</mat-error>
+        <mat-error *ngIf="signUpFormConfig.showErrorMsg(signUpForm, signUpFormConfig.CONTROL_USERNAME)">
+          {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_USERNAME)}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Email" [formControlName]="signUpFormConfig.CONTROL_EMAIL">
-        <mat-error *ngIf="showRequiredValidationMsg(signUpForm, signUpFormConfig.CONTROL_EMAIL)">Email is required</mat-error>
-        <mat-error *ngIf="showValidationMsg(signUpForm, signUpFormConfig.CONTROL_EMAIL, 'email')">Email is not valid</mat-error>
+        <mat-error *ngIf="signUpFormConfig.showErrorMsg(signUpForm, signUpFormConfig.CONTROL_EMAIL)">
+          {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_EMAIL)}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input type="password" matInput placeholder="Password" [formControlName]="signUpFormConfig.CONTROL_PASSWORD">
-        <mat-error *ngIf="showRequiredValidationMsg(signUpForm, signUpFormConfig.CONTROL_PASSWORD)">Password is required</mat-error>
+        <mat-error *ngIf="signUpFormConfig.showErrorMsg(signUpForm, signUpFormConfig.CONTROL_PASSWORD)">
+          {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_PASSWORD)}}
+        </mat-error>
       </mat-form-field>
       <button color="primary" mat-raised-button>Submit</button>
     </form>

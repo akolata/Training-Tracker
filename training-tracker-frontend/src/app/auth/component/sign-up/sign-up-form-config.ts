@@ -1,5 +1,6 @@
 import {Validators} from "@angular/forms";
 import {BaseFormConfig} from "../../../utils/base-form-config";
+import {ControlErrorMessagesBuilder} from "../../../utils/control-config";
 
 export class SignUpFormConfig extends BaseFormConfig {
 
@@ -9,28 +10,55 @@ export class SignUpFormConfig extends BaseFormConfig {
   readonly CONTROL_EMAIL = 'email';
   readonly CONTROL_PASSWORD = 'password';
 
-  getFormConfig(): { [p: string]: any } {
-    const config = {};
+  constructor() {
+    super();
+    this.initControls();
+  }
 
-    config[this.CONTROL_FIRST_NAME] = [
-      '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(40)]
-    ];
-    config[this.CONTROL_LAST_NAME] = [
-      '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(40)]]
-    ;
-    config[this.CONTROL_USERNAME] = [
-      '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(40)]
-    ];
-    config[this.CONTROL_EMAIL] = [
-      '',
-      [Validators.required, Validators.email]
-    ];
-    config[this.CONTROL_PASSWORD] = ['', Validators.required];
 
-    return config;
+  initControls(): void {
+    this.controls.set(this.CONTROL_FIRST_NAME, {
+      initialValue: '',
+      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(40)],
+      messages: new ControlErrorMessagesBuilder()
+        .required('First name is required')
+        .minLength('First name should has at least 2 characters')
+        .maxLength('First name should has maximum 40 characters')
+        .build()
+    });
+    this.controls.set(this.CONTROL_LAST_NAME, {
+      initialValue: '',
+      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(40)],
+      messages: new ControlErrorMessagesBuilder()
+        .required('Last name is required')
+        .minLength('Last name should has at least 2 characters')
+        .maxLength('Last name should has maximum 40 characters')
+        .build()
+    });
+    this.controls.set(this.CONTROL_USERNAME, {
+      initialValue: '',
+      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(40)],
+      messages: new ControlErrorMessagesBuilder()
+        .required('Username is required')
+        .minLength('Username should has at least 2 characters')
+        .maxLength('Username should has maximum 40 characters')
+        .build()
+    });
+    this.controls.set(this.CONTROL_EMAIL, {
+      initialValue: '',
+      validators: [Validators.required, Validators.email],
+      messages: new ControlErrorMessagesBuilder()
+        .required('Email is required')
+        .email('Invalid email format')
+        .build()
+    });
+    this.controls.set(this.CONTROL_PASSWORD, {
+      initialValue: '',
+      validators: [Validators.required],
+      messages: new ControlErrorMessagesBuilder()
+        .required('Password is required')
+        .build()
+    });
   }
 
 }
