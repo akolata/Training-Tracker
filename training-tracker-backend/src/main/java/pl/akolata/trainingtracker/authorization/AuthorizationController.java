@@ -19,7 +19,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/auth")
 @Slf4j
-public class AuthorizationController {
+class AuthorizationController {
 
     private final AuthorizationUserService userService;
     private final AuthenticationManager authenticationManager;
@@ -36,7 +36,7 @@ public class AuthorizationController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),

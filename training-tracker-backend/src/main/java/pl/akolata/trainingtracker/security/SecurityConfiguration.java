@@ -23,7 +23,7 @@ import pl.akolata.trainingtracker.user.DatabaseUserDetailsService;
         jsr250Enabled = true,
         prePostEnabled = true
 )
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DatabaseUserDetailsService databaseUserDetailsService;

@@ -12,7 +12,7 @@ import pl.akolata.trainingtracker.user.*;
 import java.util.Collections;
 
 @Service
-public class DatabaseAuthorizationUserService implements AuthorizationUserService {
+class DatabaseAuthorizationUserService implements AuthorizationUserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
