@@ -1,0 +1,8 @@
+<div>
+  <ng-container *ngFor="let error of getErrors()">
+    <p>{{error}}</p>
+    <ul>
+      <li *ngFor="let errorMsg of errors[error]">{{errorMsg}}</li>
+    </ul>
+  </ng-container>
+</div>

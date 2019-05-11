@@ -7,7 +7,7 @@ import java.util.TimeZone;
 
 @Configuration
 @Slf4j
-public class TimeZoneConfiguration {
+class TimeZoneConfiguration {
 
     private static final TimeZone TIMEZONE_UTC = TimeZone.getTimeZone("UTC");
 

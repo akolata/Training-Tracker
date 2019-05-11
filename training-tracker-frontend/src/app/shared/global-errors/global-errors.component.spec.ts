@@ -1,22 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {HeaderComponent} from './header.component';
-import {MaterialModule} from '../../../material.module';
+import {GlobalErrorsComponent} from './global-errors.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('GlobalErrorsComponent', () => {
+  let component: GlobalErrorsComponent;
+  let fixture: ComponentFixture<GlobalErrorsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
-      imports: [MaterialModule]
+      declarations: [GlobalErrorsComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
+    fixture = TestBed.createComponent(GlobalErrorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
