@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {SignUpFormConfig} from "./sign-up-form-config";
-import {AuthService} from "../../service/auth.service";
-import {Observable} from "rxjs";
-import {AppState} from "../../../reducers";
-import {select, Store} from "@ngrx/store";
-import {SignUp, SignUpLeft} from "../../auth.actions";
-import {getSignUpErrors} from "../../auth.selectors";
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {SignUpFormConfig} from './sign-up-form-config';
+import {AuthService} from '../../service/auth.service';
+import {Observable} from 'rxjs';
+import {AppState} from '../../../reducers';
+import {select, Store} from '@ngrx/store';
+import {SignUp, SignUpLeft} from '../../auth.actions';
+import {getSignUpErrors} from '../../auth.selectors';
 
 @Component({
   selector: 'app-sign-up',

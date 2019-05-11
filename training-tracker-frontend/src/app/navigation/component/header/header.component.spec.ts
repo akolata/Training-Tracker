@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HeaderComponent} from './header.component';
-import {MaterialModule} from "../../../material.module";
+import {MaterialModule} from '../../../material.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

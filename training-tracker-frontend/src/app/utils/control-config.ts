@@ -4,34 +4,6 @@ export interface ControlConfig {
   messages: ControlErrorMessages;
 }
 
-export class ControlErrorMessagesBuilder {
-  messages: Map<string, string> = new Map<string, string>();
-
-  required(msg): ControlErrorMessagesBuilder {
-    this.messages.set(ControlErrorMessages.REQUIRED, msg);
-    return this;
-  }
-
-  minLength(msg): ControlErrorMessagesBuilder {
-    this.messages.set(ControlErrorMessages.MIN_LENGTH , msg);
-    return this;
-  }
-
-  maxLength(msg): ControlErrorMessagesBuilder {
-    this.messages.set(ControlErrorMessages.MAX_LENGTH, msg);
-    return this;
-  }
-
-  email(msg): ControlErrorMessagesBuilder {
-    this.messages.set(ControlErrorMessages.EMAIL, msg);
-    return this;
-  }
-
-  build(): ControlErrorMessages {
-    return new ControlErrorMessages(this);
-  }
-}
-
 export class ControlErrorMessages {
 
   static readonly REQUIRED = 'required';
@@ -56,3 +28,30 @@ export class ControlErrorMessages {
 
 }
 
+export class ControlErrorMessagesBuilder {
+  messages: Map<string, string> = new Map<string, string>();
+
+  required(msg): ControlErrorMessagesBuilder {
+    this.messages.set(ControlErrorMessages.REQUIRED, msg);
+    return this;
+  }
+
+  minLength(msg): ControlErrorMessagesBuilder {
+    this.messages.set(ControlErrorMessages.MIN_LENGTH, msg);
+    return this;
+  }
+
+  maxLength(msg): ControlErrorMessagesBuilder {
+    this.messages.set(ControlErrorMessages.MAX_LENGTH, msg);
+    return this;
+  }
+
+  email(msg): ControlErrorMessagesBuilder {
+    this.messages.set(ControlErrorMessages.EMAIL, msg);
+    return this;
+  }
+
+  build(): ControlErrorMessages {
+    return new ControlErrorMessages(this);
+  }
+}

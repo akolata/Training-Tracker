@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {SignInRequest, SignInResponse, SignUpRequest, SignUpSuccessResponse} from "../component/model/auth-model";
-import {environment} from "../../../environments/environment";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {SignInRequest, SignInResponse, SignUpRequest, SignUpSuccessResponse} from '../component/model/auth-model';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {

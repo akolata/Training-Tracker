@@ -4,11 +4,11 @@ import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {Router} from '@angular/router';
 import {AuthActionTypes, SignUp, SignUpFailure, SignUpSuccess} from './auth.actions';
-import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {AuthService} from './service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {SignUpFailureResponse, SignUpSuccessResponse} from './component/model/auth-model';
-import {AlertifyService} from "../shared/service/alertify.service";
+import {AlertifyService} from '../shared/service/alertify.service';
 
 @Injectable()
 export class AuthEffects {
@@ -27,10 +27,10 @@ export class AuthEffects {
             const serverErrors: SignUpFailureResponse = errorResponse.error;
             const errorMessagesToDisplay: string[] = [];
 
-            let errors = serverErrors.data.errors;
+            const errors = serverErrors.data.errors;
             console.log(errors);
             Object.keys(errors).forEach(error => errorMessagesToDisplay.push(...errors[error]));
-            return of(new SignUpFailure({errors: errors}));
+            return of(new SignUpFailure({errors}));
           })
         )
     )

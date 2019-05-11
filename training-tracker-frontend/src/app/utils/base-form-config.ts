@@ -1,6 +1,6 @@
-import {ValidationUtils} from "./validation-utils";
-import {ControlConfig} from "./control-config";
-import {FormGroup, ValidationErrors} from "@angular/forms";
+import {ValidationUtils} from './validation-utils';
+import {ControlConfig} from './control-config';
+import {FormGroup, ValidationErrors} from '@angular/forms';
 
 export abstract class BaseFormConfig {
 
@@ -15,7 +15,7 @@ export abstract class BaseFormConfig {
 
   showErrorMsg(formGroup: FormGroup, controlName: string) {
     const formControl = formGroup.get(controlName);
-    return formControl && formControl.touched && !!formControl.errors
+    return formControl && formControl.touched && !!formControl.errors;
   }
 
   getErrorMsg(formGroup: FormGroup, controlName: string) {
@@ -29,6 +29,7 @@ export abstract class BaseFormConfig {
       return;
     }
 
+    /* tslint:disable */
     const errorsKeys = Object.keys(errors);
     for (let i = 0; i < errorsKeys.length; i++) {
       const errorMsg = controlConfig.messages.getErrorMsg(errorsKeys[i]);
@@ -36,6 +37,7 @@ export abstract class BaseFormConfig {
         return errorMsg;
       }
     }
+    /* tslint:enable */
 
     return `${controlName} error`;
   }
@@ -44,7 +46,7 @@ export abstract class BaseFormConfig {
     const config = {};
 
     this.controls.forEach((controlConfig: ControlConfig, controlName: string) => {
-      config[controlName] = [controlConfig.initialValue, controlConfig.validators]
+      config[controlName] = [controlConfig.initialValue, controlConfig.validators];
     });
 
     return config;

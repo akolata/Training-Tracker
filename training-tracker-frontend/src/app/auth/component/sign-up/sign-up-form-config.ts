@@ -1,6 +1,6 @@
-import {Validators} from "@angular/forms";
-import {BaseFormConfig} from "../../../utils/base-form-config";
-import {ControlErrorMessagesBuilder} from "../../../utils/control-config";
+import {Validators} from '@angular/forms';
+import {BaseFormConfig} from '../../../utils/base-form-config';
+import {ControlErrorMessagesBuilder} from '../../../utils/control-config';
 
 export class SignUpFormConfig extends BaseFormConfig {
 

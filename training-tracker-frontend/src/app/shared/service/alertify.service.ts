@@ -1,4 +1,4 @@
-import * as alertify from 'alertifyjs';//import
+import * as alertify from 'alertifyjs';
 
 export class AlertifyService {
 
