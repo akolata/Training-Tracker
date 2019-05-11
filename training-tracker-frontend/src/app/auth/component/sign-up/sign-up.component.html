@@ -1,6 +1,9 @@
 <div>
   <section>
     <h1>Sign Up !</h1>
+    <section *ngIf="signUpErrors$ | async as errors">
+      <app-global-errors [errors]="errors"></app-global-errors>
+    </section>
     <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
       <mat-form-field>
         <input matInput placeholder="First name" [formControlName]="signUpFormConfig.CONTROL_FIRST_NAME">
@@ -32,7 +35,7 @@
           {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_PASSWORD)}}
         </mat-error>
       </mat-form-field>
-      <button color="primary" mat-raised-button>Submit</button>
+      <button color="primary" mat-raised-button [disabled]="signUpForm.invalid">Submit</button>
     </form>
   </section>
 </div>

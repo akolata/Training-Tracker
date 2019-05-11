@@ -33,11 +33,11 @@ class DatabaseAuthorizationUserService implements AuthorizationUserService {
     public User registerUser(SignUpRequest signUpRequest) throws UserRegistrationFailureException {
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new UserRegistrationFailureException("Username is already taken!");
+            throw new UserRegistrationFailureException("Username", "Username is already taken!");
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new UserRegistrationFailureException("Email already in use!");
+            throw new UserRegistrationFailureException("Email", "Email already in use!");
         }
 
         return userRepository.saveAndFlush(createUser(signUpRequest));

@@ -37,26 +37,29 @@ export class SignUpFormConfig extends BaseFormConfig {
     });
     this.controls.set(this.CONTROL_USERNAME, {
       initialValue: '',
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(40)],
+      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(15)],
       messages: new ControlErrorMessagesBuilder()
         .required('Username is required')
-        .minLength('Username should has at least 2 characters')
-        .maxLength('Username should has maximum 40 characters')
+        .minLength('Username should has at least 4 characters')
+        .maxLength('Username should has maximum 15 characters')
         .build()
     });
     this.controls.set(this.CONTROL_EMAIL, {
       initialValue: '',
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.required, Validators.email, Validators.maxLength(40)],
       messages: new ControlErrorMessagesBuilder()
         .required('Email is required')
         .email('Invalid email format')
+        .maxLength('Email should has maximum 40 characters')
         .build()
     });
     this.controls.set(this.CONTROL_PASSWORD, {
       initialValue: '',
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(6), Validators.maxLength(20)],
       messages: new ControlErrorMessagesBuilder()
         .required('Password is required')
+        .minLength('Username should has at least 6 characters')
+        .maxLength('Username should has maximum 20 characters')
         .build()
     });
   }

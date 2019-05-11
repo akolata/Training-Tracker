@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.akolata.trainingtracker.security.JwtTokenProvider;
 import pl.akolata.trainingtracker.shared.ApiResponse;
+import pl.akolata.trainingtracker.shared.ValidationErrorsResponse;
 import pl.akolata.trainingtracker.user.User;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -65,10 +68,13 @@ class AuthorizationController {
     }
 
     @ExceptionHandler(value = UserRegistrationFailureException.class)
-    private ResponseEntity<ApiResponse<String>> handleRegistrationFailure(UserRegistrationFailureException e) {
+    private ResponseEntity<ApiResponse<ValidationErrorsResponse>> handleRegistrationFailure(UserRegistrationFailureException e) {
+        ValidationErrorsResponse errorsResponse = new ValidationErrorsResponse();
+        List<String> errorsList = Collections.singletonList(e.getMessage());
+        errorsResponse.getErrors().put(e.field, errorsList);
         return ResponseEntity
                 .badRequest()
-                .body(new ApiResponse<>(false, e.getMessage()));
+                .body(new ApiResponse<>(false, errorsResponse));
     }
 
 }
