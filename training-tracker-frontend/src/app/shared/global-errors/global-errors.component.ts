@@ -8,10 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 export class GlobalErrorsComponent implements OnInit {
 
   @Input()
-  errors: any;
+  errors: any = {};
 
   constructor() {
-    console.log(this.errors);
   }
 
   ngOnInit() {
