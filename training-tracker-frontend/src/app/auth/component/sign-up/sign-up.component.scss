@@ -1,36 +1,9 @@
-@import '../../../../vars';
+@import '../../styles/auth';
 
-div {
-  height: $full-screen-height;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#sign-up-page-wrapper {
+  @include authPageWrapper;
 }
 
-section {
-  display: flex;
-  flex-direction: column;
-  width: 30vw;
-
-  h1 {
-    font-size: $font-size;
-    font-weight: 400;
-    text-align: center;
-  }
-
-  mat-form-field {
-    width: 100%;
-    font-size: 1.5rem;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-
-    button {
-      width: 80%;
-      margin-top: 1rem;
-      align-self: center;
-    }
-  }
+#sign-up-section {
+  @include authPageSection;
 }
