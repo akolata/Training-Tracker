@@ -1,0 +1,9 @@
+@import '../../styles/auth';
+
+#sign-in-page-wrapper {
+  @include authPageWrapper;
+}
+
+#sign-in-section {
+  @include authPageSection;
+}
