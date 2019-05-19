@@ -2,6 +2,11 @@
 
 #sign-in-page-wrapper {
   @include authPageWrapper;
+
+  @media (max-height: 33rem) {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 
 #sign-in-section {
