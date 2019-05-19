@@ -7,3 +7,12 @@
 #sign-in-section {
   @include authPageSection;
 }
+
+
+#sign-in-error {
+  height: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: red;
+}

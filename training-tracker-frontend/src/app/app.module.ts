@@ -17,6 +17,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {metaReducers, reducers} from './reducers';
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {JwtService} from './shared/service/jwt-service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([]),
   ],
-  providers: [],
+  providers: [
+    JwtService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

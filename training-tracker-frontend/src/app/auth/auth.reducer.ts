@@ -44,6 +44,7 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
       return Object.assign({}, state, {
         authenticated: false,
         signUpErrors: undefined,
+        signInError: false,
         loading: true
       });
 

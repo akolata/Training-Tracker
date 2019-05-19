@@ -1,6 +1,9 @@
 <div id="sign-in-page-wrapper">
   <section id="sign-in-section">
     <h1>Sign In!</h1>
+    <div id="sign-in-error" *ngIf="signInError | async">
+      Username, email or password is incorrect
+    </div>
     <form [formGroup]="signInForm" (ngSubmit)="onSignInSubmit()">
       <mat-form-field>
         <input

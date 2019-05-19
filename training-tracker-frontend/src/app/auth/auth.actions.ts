@@ -41,7 +41,7 @@ export class SignUpLeft implements Action {
 export class SignIn implements Action {
   readonly type = AuthActionTypes.SignIn;
 
-  constructor(public payload: SignInRequest) {
+  constructor(public payload: { signInData: SignInRequest }) {
   }
 }
 
