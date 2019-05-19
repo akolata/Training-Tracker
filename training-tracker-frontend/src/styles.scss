@@ -1,11 +1,20 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import '../node_modules/alertifyjs/build/css/alertify.min.css';
 @import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
+@import 'mixins';
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5%; // 1 rem = 10px, 10px/16px = 62.5%
   font-family: 'Roboto', sans-serif;
   height: 100%;
+
+  @include respond(tab-port) { // w < 600
+    font-size: 56.25%; // 1 rem = 8px, 8px/16px = 50%
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; // 1rem = 12px
+  }
 }
 
 body {

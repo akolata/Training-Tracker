@@ -1,4 +1,5 @@
 @import '../../../vars';
+@import '../../../mixins';
 
 @mixin authPageWrapper {
   height: $full-screen-height;
@@ -12,15 +13,24 @@
   flex-direction: column;
   width: 30vw;
 
+  @include respond(phone) {
+    width: 70vw;
+  }
+
   h1 {
     font-size: $font-size;
     font-weight: 400;
     text-align: center;
+
+    @include respond(phone) {
+      font-size: 3rem;
+    }
   }
 
   mat-form-field {
     width: 100%;
     font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   form {
