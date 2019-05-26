@@ -33,3 +33,9 @@
   }
 
 }
+
+@mixin respond-mobile-landscape {
+  @media (max-height: 420px) and (orientation: landscape) {
+    @content
+  }
+}

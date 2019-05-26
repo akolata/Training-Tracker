@@ -3,18 +3,18 @@
 
 #sign-up-page-wrapper {
   @include authPageWrapper;
-
-  @media (max-height: 40rem) {
-    padding-top: #{3 * $menu-height};
-    padding-bottom: $menu-height;
-  }
-
-  @media (max-height: 33rem) {
-    padding-top: #{4 * $menu-height};
-    padding-bottom: $menu-height;
-  }
 }
 
 #sign-up-section {
   @include authPageSection;
+}
+
+@include respond-mobile-landscape {
+  #sign-up-page-wrapper {
+    height: auto;
+  }
+
+  #sign-up-section {
+    margin-bottom: 1rem;
+  }
 }
