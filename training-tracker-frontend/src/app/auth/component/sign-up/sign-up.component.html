@@ -55,7 +55,9 @@
           {{signUpFormConfig.getErrorMsg(signUpForm, signUpFormConfig.CONTROL_PASSWORD)}}
         </mat-error>
       </mat-form-field>
-      <button color="primary" mat-raised-button [disabled]="signUpForm.invalid">Sign Up</button>
+      <button color="primary" mat-raised-button [disabled]="signUpForm.invalid">
+        Sign Up <i *ngIf="loading$ | async" class="fas fa-spinner loading-spinner-animate"></i>
+      </button>
     </form>
   </section>
 </div>

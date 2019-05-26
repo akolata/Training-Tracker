@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../../reducers';
 import {SignIn, SignInLeft} from '../../auth.actions';
-import {getSignInError} from '../../auth.selectors';
+import {getSignInError, isLoading} from '../../auth.selectors';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +16,8 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   signInForm: FormGroup;
   signInFormConfig: SignInFormConfig;
-  signInError: Observable<boolean>;
+  signInError$: Observable<boolean>;
+  loading$: Observable<boolean>;
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.signInFormConfig = new SignInFormConfig();
@@ -24,7 +25,8 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.signInForm = this.buildSignInForm();
-    this.signInError = this.store.pipe(select(getSignInError));
+    this.signInError$ = this.store.pipe(select(getSignInError));
+    this.loading$ = this.store.pipe(select(isLoading));
   }
 
   onSignInSubmit(): void {
