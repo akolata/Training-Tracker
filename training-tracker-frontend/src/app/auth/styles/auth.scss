@@ -17,6 +17,10 @@
     width: 70vw;
   }
 
+  @include respond(tab-land) {
+    width: 50vw;
+  }
+
   h1 {
     font-size: $font-size;
     font-weight: 400;
