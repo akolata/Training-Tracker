@@ -26,7 +26,7 @@ export class SignInFormConfig extends BaseFormConfig {
       messages: new ControlErrorMessagesBuilder()
         .required('Password is required')
         .build()
-    })
+    });
   }
 
 }
