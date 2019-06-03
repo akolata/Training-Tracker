@@ -19,6 +19,7 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
     case AuthActionTypes.SignUp:
       return Object.assign({}, state, {
         authenticated: false,
+        signUpErrors: undefined,
         signInError: false,
         loading: true
       });
@@ -31,12 +32,13 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
 
     case AuthActionTypes.SignUpFailure:
       return Object.assign({}, state, {
-        signUpErrors: action.payload.errors,
-        loading: false
+        loading: false,
+        signUpErrors: action.payload.errors
       });
 
     case AuthActionTypes.SignUpLeft:
       return Object.assign({}, state, {
+        loading: false,
         signUpErrors: undefined
       });
 
@@ -44,6 +46,7 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
       return Object.assign({}, state, {
         authenticated: false,
         signUpErrors: undefined,
+        signInError: false,
         loading: true
       });
 

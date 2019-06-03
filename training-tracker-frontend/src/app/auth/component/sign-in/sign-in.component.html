@@ -1,3 +1,33 @@
-<p>
-  sign-in works!
-</p>
+<div id="sign-in-page-wrapper">
+  <section id="sign-in-section">
+    <h1>Sign In!</h1>
+    <div id="sign-in-error" *ngIf="signInError$ | async">
+      Username, email or password is incorrect
+    </div>
+    <form [formGroup]="signInForm" (ngSubmit)="onSignInSubmit()">
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Username or email"
+          matInput
+          [formControlName]="signInFormConfig.CONTROL_USERNAME_OR_EMAIL">
+        <mat-error *ngIf="signInFormConfig.showErrorMsg(signInForm, signInFormConfig.CONTROL_USERNAME_OR_EMAIL)">
+          {{signInFormConfig.getErrorMsg(signInForm, signInFormConfig.CONTROL_USERNAME_OR_EMAIL)}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="password"
+          placeholder="Password"
+          matInput
+          [formControlName]="signInFormConfig.CONTROL_PASSWORD">
+        <mat-error *ngIf="signInFormConfig.showErrorMsg(signInForm, signInFormConfig.CONTROL_PASSWORD)">
+          {{signInFormConfig.getErrorMsg(signInForm, signInFormConfig.CONTROL_PASSWORD)}}
+        </mat-error>
+      </mat-form-field>
+      <button id="sign-in-btn" color="primary" mat-raised-button [disabled]="signInForm.invalid">
+        Sign In <i *ngIf="loading$ | async" class="fas fa-spinner loading-spinner-animate"></i>
+      </button>
+    </form>
+  </section>
+</div>

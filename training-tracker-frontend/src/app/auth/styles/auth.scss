@@ -1,0 +1,50 @@
+@import '../../../vars';
+@import '../../../mixins';
+
+@mixin authPageWrapper {
+  height: $full-screen-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin authPageSection {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+
+  @include respond(phone) {
+    width: 70vw;
+  }
+
+  @include respond(tab-land) {
+    width: 50vw;
+  }
+
+  h1 {
+    font-size: $font-size;
+    font-weight: 400;
+    text-align: center;
+
+    @include respond(phone) {
+      font-size: 3rem;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      width: 80%;
+      margin-top: 1rem;
+      align-self: center;
+    }
+  }
+}

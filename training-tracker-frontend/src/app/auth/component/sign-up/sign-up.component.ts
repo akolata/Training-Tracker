@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {AppState} from '../../../reducers';
 import {select, Store} from '@ngrx/store';
 import {SignUp, SignUpLeft} from '../../auth.actions';
-import {getSignUpErrors} from '../../auth.selectors';
+import {getSignUpErrors, isLoading} from '../../auth.selectors';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,6 +18,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   signUpFormConfig: SignUpFormConfig;
   signUpErrors$: Observable<string[]>;
+  loading$: Observable<boolean>;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private store: Store<AppState>) {
     this.signUpFormConfig = new SignUpFormConfig();
@@ -26,6 +27,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.signUpForm = this.buildSignUpForm();
     this.signUpErrors$ = this.store.pipe(select(getSignUpErrors));
+    this.loading$ = this.store.pipe(select(isLoading));
   }
 
   onSignUpSubmit() {
