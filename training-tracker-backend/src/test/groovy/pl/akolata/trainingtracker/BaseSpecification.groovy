@@ -8,9 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import pl.akolata.trainingtracker.user.Role
-import pl.akolata.trainingtracker.user.RoleName
-import pl.akolata.trainingtracker.user.RoleRepository
 import spock.lang.Specification
 
 @SpringBootTest
@@ -22,17 +19,9 @@ class BaseSpecification extends Specification {
     @Autowired
     protected MockMvc mvc
 
-    @Autowired
-    protected RoleRepository roleRepository
-
     protected static String toJson(Object o) {
         ObjectMapper om = new ObjectMapper()
         om.writeValueAsString(o)
     }
 
-    def setup() {
-        def role = new Role()
-        role.setName(RoleName.ROLE_USER)
-        roleRepository.saveAndFlush(role)
-    }
 }
