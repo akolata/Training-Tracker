@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.akolata.trainingtracker.shared.ApiResponse;
@@ -15,7 +14,6 @@ import java.net.URI;
 @RestController
 @RequestMapping(path = "/api")
 @Slf4j
-@Validated
 class GymController {
 
     private static final String GYM_URL = "/gym";

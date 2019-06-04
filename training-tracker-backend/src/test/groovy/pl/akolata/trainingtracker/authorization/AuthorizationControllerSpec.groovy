@@ -11,7 +11,7 @@ import pl.akolata.trainingtracker.user.UserRepository
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 
-class AuthorizationControllerSpecification extends BaseSpecification {
+class AuthorizationControllerSpec extends BaseSpecification {
 
     static final SIGN_UP_REQUEST = '/api/auth/sign-up'
 
@@ -22,6 +22,8 @@ class AuthorizationControllerSpecification extends BaseSpecification {
     RoleRepository roleRepository
 
     def setup() {
+        roleRepository.deleteAll()
+
         def role = new Role()
         role.setName(RoleName.ROLE_USER)
         roleRepository.saveAndFlush(role)
