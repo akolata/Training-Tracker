@@ -4,18 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.akolata.trainingtracker.shared.ApiResponse;
+import pl.akolata.trainingtracker.shared.BaseApiController;
 
 import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping(path = "/api")
 @Slf4j
-class GymController {
-
+class GymController extends BaseApiController {
     private static final String GYM_URL = "/gym";
 
     private final GymService gymService;
@@ -36,7 +38,7 @@ class GymController {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/api/gym/{id}")
+                .path(BaseApiController.API_URL + GYM_URL + "/{id}")
                 .buildAndExpand(gym.getId())
                 .toUri();
 
