@@ -1,6 +1,8 @@
 package pl.akolata.trainingtracker.gym;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -9,10 +11,12 @@ import javax.transaction.Transactional;
 class GymDatabaseService implements GymService {
 
     private final GymRepository gymRepository;
+    private final GymMapper gymMapper;
 
     @Autowired
-    GymDatabaseService(GymRepository gymRepository) {
+    GymDatabaseService(GymRepository gymRepository, GymMapper gymMapper) {
         this.gymRepository = gymRepository;
+        this.gymMapper = gymMapper;
     }
 
     @Transactional
@@ -25,5 +29,11 @@ class GymDatabaseService implements GymService {
         Gym gym = new Gym();
         gym.setName(createGymCommand.getName());
         return gymRepository.save(gym);
+    }
+
+    @Override
+    public Page<GymDto> findGyms(Pageable pageable) {
+        Page<Gym> gymsPage = gymRepository.findAll(pageable);
+        return gymsPage.map(gymMapper::fromEntity);
     }
 }
