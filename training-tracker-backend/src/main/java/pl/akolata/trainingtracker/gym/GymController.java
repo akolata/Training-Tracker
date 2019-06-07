@@ -13,6 +13,7 @@ import pl.akolata.trainingtracker.shared.BaseApiController;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -53,6 +54,18 @@ class GymController extends BaseApiController {
     ResponseEntity<ApiResponse<Page<GymDto>>> getGyms(Pageable pageable) {
         Page<GymDto> gymsDTOsPage = gymService.findGyms(pageable != null ? pageable : getDefaultPageable());
         return ResponseEntity.ok(new ApiResponse<>(true, gymsDTOsPage));
+    }
+
+    @GetMapping(
+            path = GYM_URL + "/{id}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    ResponseEntity<ApiResponse<GymDto>> getGyms(@PathVariable Long id) {
+        Optional<GymDto> gym = gymService.findGym(id);
+        if (gym.isPresent()) {
+            return ResponseEntity.ok(new ApiResponse<>(true, gym.get()));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(value = GymCreationFailureException.class)

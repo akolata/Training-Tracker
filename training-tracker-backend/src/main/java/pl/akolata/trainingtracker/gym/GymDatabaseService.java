@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 class GymDatabaseService implements GymService {
@@ -35,5 +36,14 @@ class GymDatabaseService implements GymService {
     public Page<GymDto> findGyms(Pageable pageable) {
         Page<Gym> gymsPage = gymRepository.findAll(pageable);
         return gymsPage.map(gymMapper::fromEntity);
+    }
+
+    @Override
+    public Optional<GymDto> findGym(Long id) {
+        Optional<Gym> gym = gymRepository.findById(id);
+        if (gym.isPresent()) {
+            return gym.map(gymMapper::fromEntity);
+        }
+        return Optional.empty();
     }
 }
