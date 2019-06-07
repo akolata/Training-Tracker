@@ -15,6 +15,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @Slf4j
 class GymController extends BaseApiController {
@@ -51,19 +54,19 @@ class GymController extends BaseApiController {
             path = GYM_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<Page<GymDto>>> getGyms(Pageable pageable) {
+    ResponseEntity<ApiResponse<Page<GymApiDto>>> getGyms(Pageable pageable) {
         Page<GymDto> gymsDTOsPage = gymService.findGyms(pageable != null ? pageable : getDefaultPageable());
-        return ResponseEntity.ok(new ApiResponse<>(true, gymsDTOsPage));
+        return ResponseEntity.ok(ApiResponse.success(gymsDTOsPage.map(this::mapToApiDto)));
     }
 
     @GetMapping(
             path = GYM_URL + "/{id}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<GymDto>> getGyms(@PathVariable Long id) {
+    ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long id) {
         Optional<GymDto> gym = gymService.findGym(id);
         if (gym.isPresent()) {
-            return ResponseEntity.ok(new ApiResponse<>(true, gym.get()));
+            return ResponseEntity.ok(ApiResponse.success(gym.map(this::mapToApiDto).get()));
         }
         return ResponseEntity.notFound().build();
     }
@@ -73,5 +76,11 @@ class GymController extends BaseApiController {
         return ResponseEntity
                 .badRequest()
                 .body(new ApiResponse<>(false, e.getMessage()));
+    }
+
+    private GymApiDto mapToApiDto(GymDto gymDto) {
+        GymApiDto gymApiDto = new GymApiDto(gymDto);
+        gymApiDto.add(linkTo(methodOn(GymController.class).getGym(gymDto.getId())).withSelfRel());
+        return gymApiDto;
     }
 }
