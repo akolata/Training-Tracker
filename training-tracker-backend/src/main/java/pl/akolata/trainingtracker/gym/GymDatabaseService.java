@@ -39,11 +39,8 @@ class GymDatabaseService implements GymService {
     }
 
     @Override
-    public Optional<GymDto> findGym(Long id) {
+    public GymDto findGym(Long id) {
         Optional<Gym> gym = gymRepository.findById(id);
-        if (gym.isPresent()) {
-            return gym.map(gymMapper::fromEntity);
-        }
-        return Optional.empty();
+        return gym.map(gymMapper::fromEntity).orElse(null);
     }
 }

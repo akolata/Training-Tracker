@@ -13,7 +13,6 @@ import pl.akolata.trainingtracker.shared.BaseApiController;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -64,9 +63,9 @@ class GymController extends BaseApiController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long id) {
-        Optional<GymDto> gym = gymService.findGym(id);
-        if (gym.isPresent()) {
-            return ResponseEntity.ok(ApiResponse.success(gym.map(this::mapToApiDto).get()));
+        GymDto gym = gymService.findGym(id);
+        if (gym != null) {
+            return ResponseEntity.ok(ApiResponse.success(mapToApiDto(gym)));
         }
         return ResponseEntity.notFound().build();
     }
