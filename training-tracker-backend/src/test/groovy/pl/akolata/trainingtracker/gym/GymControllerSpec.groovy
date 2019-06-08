@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 class GymControllerSpec extends BaseSpecification {
 
-    static final GYM_URL = "/api/gym"
+    static final GYM_URL = "/api/gyms"
 
     @Autowired
     GymRepository gymRepository

@@ -50,6 +50,7 @@ class AuthorizationControllerSpec extends BaseSpecification {
     }
 
     def cleanup() {
+        userRepository.deleteAll()
         roleRepository.deleteAll()
     }
 

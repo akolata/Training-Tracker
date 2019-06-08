@@ -46,7 +46,7 @@ class CreateGymRequestTest {
         assertTrue(nameViolationOpt.isPresent());
 
         ConstraintViolation<CreateGymRequest> nameViolation = nameViolationOpt.get();
-        assertEquals("must not be empty", nameViolation.getMessage());
+        assertEquals("must not be null", nameViolation.getMessage());
     }
 
     @Test

@@ -41,6 +41,19 @@ class GymDatabaseServiceSpec extends BaseSpecification {
         gymRepository.count() == 1
     }
 
+    def "should find a gym in the database"() {
+        given: "gym already present in the database"
+        Gym gym = gymRepository.saveAndFlush(new Gym(name: 'City Fit'))
+
+        when: ""
+        GymDto foundGym = gymService.findGym(gym.id)
+
+        then: "gym will be found"
+        foundGym != null
+        gym.id == foundGym.id
+        gym.name == foundGym.name
+    }
+
     def cleanup() {
         gymRepository.deleteAll()
     }
