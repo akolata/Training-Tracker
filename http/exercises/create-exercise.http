@@ -1,0 +1,10 @@
+POST http://localhost:8080/api/exercises
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU5Njc2ODQ1LCJleHAiOjE1NjAyODE2NDV9.cUREVjhnp-lI1-k4gkAe7lFW1WaKgdmplMcSH8iphqfD3XCNm8GdDAlGGaqTunqi6UOWzQm7KRHxN42L9eL-_g
+
+{
+  "name": "Running",
+  "type": "CARDIO"
+}
+
+###
