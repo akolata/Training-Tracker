@@ -2,6 +2,7 @@ package pl.akolata.trainingtracker.gym
 
 import org.springframework.beans.factory.annotation.Autowired
 import pl.akolata.trainingtracker.BaseSpecification
+import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException
 
 class GymDatabaseServiceSpec extends BaseSpecification {
 
@@ -24,7 +25,7 @@ class GymDatabaseServiceSpec extends BaseSpecification {
         gymService.createGym(new CreateGymCommand(gymName))
 
         then: "an exception should be thrown"
-        thrown GymCreationFailureException
+        thrown ResourceCreationFailureException
     }
 
     def "should create and save a new gym in the database"() {
@@ -46,7 +47,7 @@ class GymDatabaseServiceSpec extends BaseSpecification {
         Gym gym = gymRepository.saveAndFlush(new Gym(name: 'City Fit'))
 
         when: ""
-        GymDto foundGym = gymService.findGym(gym.id)
+        Gym foundGym = gymService.findGymById(gym.id)
 
         then: "gym will be found"
         foundGym != null

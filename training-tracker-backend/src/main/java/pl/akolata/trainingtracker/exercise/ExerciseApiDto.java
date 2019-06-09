@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.gym;
+package pl.akolata.trainingtracker.exercise;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -6,6 +6,6 @@ import org.springframework.hateoas.ResourceSupport;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-class GymApiDto extends ResourceSupport {
-    private final GymDto gymDto;
+class ExerciseApiDto extends ResourceSupport {
+    private final ExerciseDto exercise;
 }

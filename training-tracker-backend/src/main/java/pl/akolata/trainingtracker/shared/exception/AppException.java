@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.shared;
+package pl.akolata.trainingtracker.shared.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,7 +9,4 @@ public class AppException extends RuntimeException {
         super(message);
     }
 
-    public AppException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

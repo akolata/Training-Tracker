@@ -4,43 +4,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 class GymDatabaseService implements GymService {
 
+    private static final String DUPLICATED_GYM_MSG = "Gym with name '%s' already exists";
+
     private final GymRepository gymRepository;
-    private final GymMapper gymMapper;
 
     @Autowired
-    GymDatabaseService(GymRepository gymRepository, GymMapper gymMapper) {
+    GymDatabaseService(GymRepository gymRepository) {
         this.gymRepository = gymRepository;
-        this.gymMapper = gymMapper;
     }
 
     @Transactional
     @Override
-    public Gym createGym(CreateGymCommand createGymCommand) throws GymCreationFailureException {
-        if (gymRepository.existsByName(createGymCommand.getName())) {
-            throw new GymCreationFailureException("Gym's name is not unique");
+    public Gym createGym(CreateGymCommand command) {
+        Objects.requireNonNull(command);
+
+        if (gymRepository.existsByName(command.getName())) {
+            throw new ResourceCreationFailureException(String.format(DUPLICATED_GYM_MSG, command.getName()));
         }
 
-        Gym gym = new Gym();
-        gym.setName(createGymCommand.getName());
-        return gymRepository.save(gym);
+        return gymRepository.saveAndFlush(command.toGym());
     }
 
     @Override
-    public Page<GymDto> findGyms(Pageable pageable) {
-        Page<Gym> gymsPage = gymRepository.findAll(pageable);
-        return gymsPage.map(gymMapper::fromEntity);
+    public Page<Gym> findGyms(Pageable pageable) {
+        Objects.requireNonNull(pageable);
+        return gymRepository.findAll(pageable);
     }
 
     @Override
-    public GymDto findGym(Long id) {
-        Optional<Gym> gym = gymRepository.findById(id);
-        return gym.map(gymMapper::fromEntity).orElse(null);
+    public Gym findGymById(Long id) {
+        Objects.requireNonNull(id);
+        return gymRepository.findById(id).orElse(null);
     }
 }

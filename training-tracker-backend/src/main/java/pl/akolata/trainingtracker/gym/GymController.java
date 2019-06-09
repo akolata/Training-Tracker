@@ -14,18 +14,15 @@ import pl.akolata.trainingtracker.shared.BaseApiController;
 import javax.validation.Valid;
 import java.net.URI;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 @RestController
 @Slf4j
 class GymController extends BaseApiController {
     private static final String GYM_URL = "/gyms";
 
-    private final GymService gymService;
+    private final GymApiService gymService;
 
     @Autowired
-    GymController(GymService gymService) {
+    GymController(GymApiService gymService) {
         this.gymService = gymService;
     }
 
@@ -34,9 +31,9 @@ class GymController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<String>> createGym(@Valid @RequestBody CreateGymRequest createGymRequest) throws GymCreationFailureException {
+    ResponseEntity<ApiResponse<String>> createGym(@Valid @RequestBody CreateGymRequest createGymRequest) {
         CreateGymCommand createGymCommand = new CreateGymCommand(createGymRequest.getName());
-        Gym gym = gymService.createGym(createGymCommand);
+        GymApiDto gym = gymService.createGym(createGymCommand);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
@@ -54,8 +51,8 @@ class GymController extends BaseApiController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     ResponseEntity<ApiResponse<Page<GymApiDto>>> getGyms(Pageable pageable) {
-        Page<GymDto> gymsDTOsPage = gymService.findGyms(pageable != null ? pageable : getDefaultPageable());
-        return ResponseEntity.ok(ApiResponse.success(gymsDTOsPage.map(this::mapToApiDto)));
+        Page<GymApiDto> gyms = gymService.findGyms(pageable != null ? pageable : getDefaultPageable());
+        return ResponseEntity.ok(ApiResponse.success(gyms));
     }
 
     @GetMapping(
@@ -63,23 +60,7 @@ class GymController extends BaseApiController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long id) {
-        GymDto gym = gymService.findGym(id);
-        if (gym != null) {
-            return ResponseEntity.ok(ApiResponse.success(mapToApiDto(gym)));
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(value = GymCreationFailureException.class)
-    private ResponseEntity<ApiResponse<String>> handleRegistrationFailure(GymCreationFailureException e) {
-        return ResponseEntity
-                .badRequest()
-                .body(new ApiResponse<>(false, e.getMessage()));
-    }
-
-    private GymApiDto mapToApiDto(GymDto gymDto) {
-        GymApiDto gymApiDto = new GymApiDto(gymDto);
-        gymApiDto.add(linkTo(methodOn(GymController.class).getGym(gymDto.getId())).withSelfRel());
-        return gymApiDto;
+        GymApiDto gym = gymService.findGymById(id);
+        return ResponseEntity.ok(ApiResponse.success(gym));
     }
 }
