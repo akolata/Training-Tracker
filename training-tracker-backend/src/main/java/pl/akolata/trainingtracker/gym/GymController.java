@@ -61,9 +61,6 @@ class GymController extends BaseApiController {
     )
     ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long id) {
         GymApiDto gym = gymService.findGymById(id);
-        if (gym != null) {
-            return ResponseEntity.ok(ApiResponse.success(gym));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(ApiResponse.success(gym));
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 class GymDatabaseService implements GymService {
@@ -43,7 +42,6 @@ class GymDatabaseService implements GymService {
     @Override
     public Gym findGymById(Long id) {
         Objects.requireNonNull(id);
-        Optional<Gym> gym = gymRepository.findById(id);
-        return gym.orElse(null);
+        return gymRepository.findById(id).orElse(null);
     }
 }
