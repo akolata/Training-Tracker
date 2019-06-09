@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pl.akolata.trainingtracker.shared.AppException;
+import pl.akolata.trainingtracker.shared.exception.AppException;
 import pl.akolata.trainingtracker.user.*;
 
 import java.util.Collections;

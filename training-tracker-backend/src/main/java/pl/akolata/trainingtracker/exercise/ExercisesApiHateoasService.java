@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.akolata.trainingtracker.shared.exception.ResourceNotFoundException;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -33,8 +34,13 @@ class ExercisesApiHateoasService implements ExercisesApiService {
     }
 
     @Override
-    public ExerciseApiDto findExerciseById(Long id) {
+    public ExerciseApiDto findExerciseById(Long id) throws ResourceNotFoundException {
         Exercise exercise = exercisesService.findExerciseById(id);
+
+        if (exercise == null) {
+            throw new ResourceNotFoundException("Exercise with id " + id + " not found.");
+        }
+
         return mapToApiDto(exercise);
     }
 

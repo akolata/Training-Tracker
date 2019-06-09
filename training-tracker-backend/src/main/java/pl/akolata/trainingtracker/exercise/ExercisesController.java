@@ -49,10 +49,7 @@ class ExercisesController extends BaseApiController {
     )
     ResponseEntity<ApiResponse<ExerciseApiDto>> getExercise(@PathVariable Long id) {
         ExerciseApiDto exercise = exercisesService.findExerciseById(id);
-        if (exercise != null) {
-            return ResponseEntity.ok(ApiResponse.success(exercise));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(ApiResponse.success(exercise));
     }
 
     @ExceptionHandler(ExerciseCreationFailureException.class)
