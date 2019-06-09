@@ -5,7 +5,7 @@ import lombok.Value;
 import org.springframework.hateoas.ResourceSupport;
 
 @Value
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 class GymApiDto extends ResourceSupport {
     private final GymDto gymDto;
 }

@@ -46,7 +46,7 @@ class GymDatabaseServiceSpec extends BaseSpecification {
         Gym gym = gymRepository.saveAndFlush(new Gym(name: 'City Fit'))
 
         when: ""
-        GymDto foundGym = gymService.findGym(gym.id)
+        GymDto foundGym = gymService.findGymById(gym.id)
 
         then: "gym will be found"
         foundGym != null

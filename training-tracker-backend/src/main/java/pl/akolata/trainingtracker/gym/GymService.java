@@ -3,10 +3,10 @@ package pl.akolata.trainingtracker.gym;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-interface GymService {
+interface GymService extends BaseGymService<Gym> {
     Gym createGym(CreateGymCommand createGymCommand) throws GymCreationFailureException;
 
-    Page<GymDto> findGyms(Pageable pageable);
+    Page<Gym> findGyms(Pageable pageable);
 
-    GymDto findGym(Long id);
+    Gym findGymById(Long id);
 }
