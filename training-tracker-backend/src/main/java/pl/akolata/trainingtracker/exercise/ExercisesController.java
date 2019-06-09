@@ -28,7 +28,7 @@ class ExercisesController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<ExerciseApiDto>> addExercise(@Valid @RequestBody CreateExerciseRequest request) throws ExerciseCreationFailureException {
+    ResponseEntity<ApiResponse<ExerciseApiDto>> addExercise(@Valid @RequestBody CreateExerciseRequest request) {
         CreateExerciseCommand command = new CreateExerciseCommand(request.getName(), request.getType());
         ExerciseApiDto exercise = exercisesService.createExercise(command);
         return ResponseEntity.ok(ApiResponse.success(exercise));
@@ -50,10 +50,5 @@ class ExercisesController extends BaseApiController {
     ResponseEntity<ApiResponse<ExerciseApiDto>> getExercise(@PathVariable Long id) {
         ExerciseApiDto exercise = exercisesService.findExerciseById(id);
         return ResponseEntity.ok(ApiResponse.success(exercise));
-    }
-
-    @ExceptionHandler(ExerciseCreationFailureException.class)
-    ResponseEntity<ApiResponse<String>> handleCreationFailure(ExerciseCreationFailureException e) {
-        return ResponseEntity.badRequest().body(ApiResponse.failure(e.getMessage()));
     }
 }

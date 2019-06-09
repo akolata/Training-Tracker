@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import pl.akolata.trainingtracker.shared.ApiResponse;
 import pl.akolata.trainingtracker.shared.ValidationErrorsResponse;
+import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
 import pl.akolata.trainingtracker.shared.exception.ResourceNotFoundException;
 
 import java.util.LinkedHashMap;
@@ -41,7 +42,13 @@ class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ResourceNotFoundException.class})
     ResponseEntity handleResourceNotFound(ResourceNotFoundException e) {
-        log.debug(e.getMessage());
+        log.debug("Exception {} handled, reason: {}", ResourceNotFoundException.class.getSimpleName(), e.getMessage());
         return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler({ResourceCreationFailureException.class})
+    ResponseEntity<ApiResponse<String>> handleResourceCreationFailure(ResourceCreationFailureException e) {
+        log.debug("Exception {} handled, reason: {}", ResourceCreationFailureException.class.getSimpleName(), e.getMessage());
+        return ResponseEntity.badRequest().body(ApiResponse.failure(e.getMessage()));
     }
 }

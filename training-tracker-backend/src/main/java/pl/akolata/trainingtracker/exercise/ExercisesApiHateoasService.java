@@ -22,7 +22,7 @@ class ExercisesApiHateoasService implements ExercisesApiService {
     }
 
     @Override
-    public ExerciseApiDto createExercise(CreateExerciseCommand command) throws ExerciseCreationFailureException {
+    public ExerciseApiDto createExercise(CreateExerciseCommand command) {
         Exercise exercise = exercisesService.createExercise(command);
         return mapToApiDto(exercise);
     }

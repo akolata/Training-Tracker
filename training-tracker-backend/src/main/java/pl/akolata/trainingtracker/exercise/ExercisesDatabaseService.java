@@ -5,11 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
 
 import java.util.Objects;
 
 @Service
 class ExercisesDatabaseService implements ExercisesService {
+
+    private static final String DUPLICATED_EXERCISE_MSG = "Exercise with name '%s' and type %s already exists";
 
     private final ExercisesRepository exercisesRepository;
 
@@ -20,11 +23,12 @@ class ExercisesDatabaseService implements ExercisesService {
 
     @Transactional
     @Override
-    public Exercise createExercise(CreateExerciseCommand command) throws ExerciseCreationFailureException {
+    public Exercise createExercise(CreateExerciseCommand command) {
         Objects.requireNonNull(command);
 
-        if (exercisesRepository.existsByName(command.getName())) {
-            throw new ExerciseCreationFailureException("Exercise with name " + command.getName() + " already exists");
+        if (exercisesRepository.existsByNameAndType(command.getName(), command.getType())) {
+            throw new ResourceCreationFailureException(
+                    String.format(DUPLICATED_EXERCISE_MSG, command.getName(), command.getType()));
         }
 
         return exercisesRepository.saveAndFlush(command.toExercise());

@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
  * @param <T> actual result type - it might be a database entity, or an DTO
  */
 interface BaseExercisesService<T> {
-    T createExercise(CreateExerciseCommand command) throws ExerciseCreationFailureException;
+    T createExercise(CreateExerciseCommand command);
 
     Page<T> findExercises(Pageable pageable);
 
