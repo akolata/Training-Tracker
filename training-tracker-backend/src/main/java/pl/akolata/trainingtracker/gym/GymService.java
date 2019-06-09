@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 interface GymService extends BaseGymService<Gym> {
-    Gym createGym(CreateGymCommand createGymCommand) throws GymCreationFailureException;
+    Gym createGym(CreateGymCommand createGymCommand);
 
     Page<Gym> findGyms(Pageable pageable);
 

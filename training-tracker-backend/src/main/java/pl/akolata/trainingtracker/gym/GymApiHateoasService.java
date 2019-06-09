@@ -21,7 +21,7 @@ class GymApiHateoasService implements GymApiService {
     }
 
     @Override
-    public GymApiDto createGym(CreateGymCommand command) throws GymCreationFailureException {
+    public GymApiDto createGym(CreateGymCommand command) {
         Gym gym = gymService.createGym(command);
         return mapToApiDto(gym);
     }

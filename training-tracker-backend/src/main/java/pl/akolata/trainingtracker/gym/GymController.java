@@ -31,7 +31,7 @@ class GymController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<String>> createGym(@Valid @RequestBody CreateGymRequest createGymRequest) throws GymCreationFailureException {
+    ResponseEntity<ApiResponse<String>> createGym(@Valid @RequestBody CreateGymRequest createGymRequest) {
         CreateGymCommand createGymCommand = new CreateGymCommand(createGymRequest.getName());
         GymApiDto gym = gymService.createGym(createGymCommand);
 
@@ -65,12 +65,5 @@ class GymController extends BaseApiController {
             return ResponseEntity.ok(ApiResponse.success(gym));
         }
         return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(value = GymCreationFailureException.class)
-    private ResponseEntity<ApiResponse<String>> handleRegistrationFailure(GymCreationFailureException e) {
-        return ResponseEntity
-                .badRequest()
-                .body(new ApiResponse<>(false, e.getMessage()));
     }
 }
