@@ -2,10 +2,10 @@ package pl.akolata.trainingtracker.exercise;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-import org.springframework.hateoas.ResourceSupport;
+import pl.akolata.trainingtracker.shared.dto.BaseApiDto;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-class ExerciseApiDto extends ResourceSupport {
+class ExerciseApiDto extends BaseApiDto {
     private final ExerciseDto exercise;
 }
