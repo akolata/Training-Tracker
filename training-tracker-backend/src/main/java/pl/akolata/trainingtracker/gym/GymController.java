@@ -31,7 +31,7 @@ class GymController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<String>> createGym(@Valid @RequestBody CreateGymRequest createGymRequest) {
+    ResponseEntity<ApiResponse<String>> addGym(@Valid @RequestBody CreateGymRequest createGymRequest) {
         CreateGymCommand createGymCommand = new CreateGymCommand(createGymRequest.getName());
         GymApiDto gym = gymService.createGym(createGymCommand);
 
