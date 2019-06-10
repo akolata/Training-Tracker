@@ -22,6 +22,14 @@ public class Training extends BaseEntity {
     @Getter
     private LocalDate date;
 
+    @Column
+    @Getter
+    private String additionalInfo;
+
+    @Column
+    @Getter
+    private String name;
+
     @ManyToOne
     @JoinColumn(
             name = "GYM_ID",

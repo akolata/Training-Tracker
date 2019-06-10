@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/trainings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU5Njc2ODQ1LCJleHAiOjE1NjAyODE2NDV9.cUREVjhnp-lI1-k4gkAe7lFW1WaKgdmplMcSH8iphqfD3XCNm8GdDAlGGaqTunqi6UOWzQm7KRHxN42L9eL-_g
+
+{
+  "date": "2019-10-30",
+  "additionalInfo": "Good training",
+  "gymId": 1,
+  "name": "Friday's workout"
+}
+
+###

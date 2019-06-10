@@ -43,4 +43,7 @@ public class TrainingSet extends BaseEntity {
 
     @Column(scale = 2)
     private Double distanceInKm;
+
+    @Column
+    private String additionalInfo;
 }
