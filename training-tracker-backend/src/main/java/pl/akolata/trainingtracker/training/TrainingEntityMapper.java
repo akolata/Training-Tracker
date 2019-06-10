@@ -1,10 +1,10 @@
 package pl.akolata.trainingtracker.training;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import pl.akolata.trainingtracker.shared.service.BaseEntityMapper;
 
-@Service
+@Component
 class TrainingEntityMapper implements BaseEntityMapper<Training, TrainingDto, TrainingApiDto> {
 
     private final TrainingMapper trainingMapper;
@@ -17,12 +17,6 @@ class TrainingEntityMapper implements BaseEntityMapper<Training, TrainingDto, Tr
     @Override
     public TrainingDto toDto(Training training) {
         return trainingMapper.toTrainingDto(training);
-    }
-
-    @Override
-    public TrainingApiDto toApiDto(Training training) {
-        TrainingDto trainingDto = toDto(training);
-        return new TrainingApiDto(trainingDto);
     }
 
     @Override
