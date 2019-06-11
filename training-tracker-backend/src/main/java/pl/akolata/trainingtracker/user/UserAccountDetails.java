@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
 @Getter
@@ -11,7 +12,7 @@ import javax.persistence.Embeddable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountDetails {
+public class UserAccountDetails implements Serializable {
 
     @Column(nullable = false, columnDefinition = "BIT(1)")
     private Boolean accountExpired;

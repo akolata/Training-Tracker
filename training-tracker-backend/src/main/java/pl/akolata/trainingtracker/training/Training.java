@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.akolata.trainingtracker.gym.Gym;
 import pl.akolata.trainingtracker.shared.BaseEntity;
+import pl.akolata.trainingtracker.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,6 +38,14 @@ public class Training extends BaseEntity {
     )
     @Getter
     private Gym gym;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "USER_ID",
+            foreignKey = @ForeignKey(name = "FK_TRAINING_USER_ID")
+    )
+    @Getter
+    private User user;
 
     @OneToMany(
             mappedBy = "training",
