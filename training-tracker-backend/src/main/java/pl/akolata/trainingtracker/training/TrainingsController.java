@@ -49,6 +49,7 @@ class TrainingsController extends BaseApiController {
         return new CreateTrainingCommand(
                 request.getDate(),
                 request.getGymId(),
+                request.getUserId(),
                 request.getAdditionalInfo(),
                 request.getName()
         );

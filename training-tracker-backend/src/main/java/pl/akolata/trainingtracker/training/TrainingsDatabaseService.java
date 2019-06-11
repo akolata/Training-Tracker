@@ -2,8 +2,10 @@ package pl.akolata.trainingtracker.training;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.akolata.trainingtracker.gym.GymFacade;
 import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
+import pl.akolata.trainingtracker.user.UserFacade;
 
 import java.util.Objects;
 
@@ -11,32 +13,38 @@ import java.util.Objects;
 class TrainingsDatabaseService implements TrainingsService {
 
     private final GymFacade gymFacade;
+    private final UserFacade userFacade;
     private final TrainingsRepository trainingsRepository;
 
     @Autowired
-    TrainingsDatabaseService(GymFacade gymFacade, TrainingsRepository trainingsRepository) {
+    TrainingsDatabaseService(GymFacade gymFacade, UserFacade userFacade, TrainingsRepository trainingsRepository) {
         this.gymFacade = gymFacade;
+        this.userFacade = userFacade;
         this.trainingsRepository = trainingsRepository;
     }
 
+    @Transactional
     @Override
     public Training createTraining(CreateTrainingCommand command) {
         Objects.requireNonNull(command);
-
-        if (gymIdIsNotValid(command.getGymId())) {
-            throw new ResourceCreationFailureException("There is no gym with id " + command.getGymId());
-        }
+        validateUserAndGymId(command.getGymId(), command.getUserId());
 
         Training training = trainingEntityFromCommand(command);
         return trainingsRepository.saveAndFlush(training);
     }
 
-    private boolean gymIdIsNotValid(Long gymId) {
-        if (gymId == null) {
-            return false;
+    private void validateUserAndGymId(Long gymId, Long userId) {
+        if (gymId != null && gymFacade.getGymById(gymId) == null) {
+            throw new ResourceCreationFailureException("There is no gym with id " + gymId);
         }
 
-        return gymFacade.getGymById(gymId) == null;
+        if (userId == null) {
+            throw new ResourceCreationFailureException("User id must not be null");
+        }
+
+        if (userFacade.getUserById(userId) == null) {
+            throw new ResourceCreationFailureException("There is no user with id " + userId);
+        }
     }
 
     private Training trainingEntityFromCommand(CreateTrainingCommand command) {
@@ -48,6 +56,7 @@ class TrainingsDatabaseService implements TrainingsService {
         if (command.getGymId() != null) {
             training.setGym(gymFacade.getGymById(command.getGymId()));
         }
+        training.setUser(userFacade.getUserById(command.getUserId()));
 
         return training;
     }
