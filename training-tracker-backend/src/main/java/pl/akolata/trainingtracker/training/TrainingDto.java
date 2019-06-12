@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(callSuper = true)
 class TrainingDto extends BaseDto {
-    private Long id;
     private String name;
     private String additionalInfo;
     private LocalDate date;
     private GymDto gym;
+    private Long userId;
     // TODO add sets
 }
