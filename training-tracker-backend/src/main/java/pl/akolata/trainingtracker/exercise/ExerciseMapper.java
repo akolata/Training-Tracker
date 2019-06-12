@@ -4,5 +4,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 interface ExerciseMapper {
-    ExerciseDto fromEntity(Exercise exercise);
+    ExerciseDto toExerciseDto(Exercise exercise);
 }

@@ -6,17 +6,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.akolata.trainingtracker.shared.exception.ResourceNotFoundException;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 @Service
 class ExercisesApiHateoasService implements ExercisesApiService {
 
     private final ExercisesService exercisesService;
-    private final ExerciseMapper exerciseMapper;
+    private final ExerciseEntityMapper exerciseMapper;
 
     @Autowired
-    ExercisesApiHateoasService(ExercisesService exercisesService, ExerciseMapper exerciseMapper) {
+    ExercisesApiHateoasService(ExercisesService exercisesService, ExerciseEntityMapper exerciseMapper) {
         this.exercisesService = exercisesService;
         this.exerciseMapper = exerciseMapper;
     }
@@ -24,34 +21,23 @@ class ExercisesApiHateoasService implements ExercisesApiService {
     @Override
     public ExerciseApiDto createExercise(CreateExerciseCommand command) {
         Exercise exercise = exercisesService.createExercise(command);
-        return mapToApiDto(exercise);
+        return exerciseMapper.toApiDto(exercise);
     }
 
     @Override
     public Page<ExerciseApiDto> findExercises(Pageable pageable) {
         return exercisesService.findExercises(pageable)
-                .map(this::mapToApiDto);
+                .map(exerciseMapper::toApiDto);
     }
 
     @Override
-    public ExerciseApiDto findExerciseById(Long id) throws ResourceNotFoundException {
+    public ExerciseApiDto findExerciseById(Long id) {
         Exercise exercise = exercisesService.findExerciseById(id);
 
         if (exercise == null) {
             throw new ResourceNotFoundException("Exercise with id " + id + " not found.");
         }
 
-        return mapToApiDto(exercise);
-    }
-
-    private ExerciseApiDto mapToApiDto(Exercise exercise) {
-        ExerciseDto exerciseDto = exerciseMapper.fromEntity(exercise);
-        return mapToApiDto(exerciseDto);
-    }
-
-    private ExerciseApiDto mapToApiDto(ExerciseDto exerciseDto) {
-        ExerciseApiDto exerciseApiDto = new ExerciseApiDto(exerciseDto);
-        exerciseApiDto.add(linkTo(methodOn(ExercisesController.class).getExercise(exerciseDto.getId())).withSelfRel());
-        return exerciseApiDto;
+        return exerciseMapper.toApiDto(exercise);
     }
 }

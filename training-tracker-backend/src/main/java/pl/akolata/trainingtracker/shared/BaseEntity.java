@@ -3,6 +3,7 @@ package pl.akolata.trainingtracker.shared;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class BaseEntity implements Serializable {
     @Getter
     private LocalDateTime createdAt;
 
-    @CreatedDate
+    @LastModifiedDate
     @Column(nullable = false, updatable = false)
     @Getter
     private LocalDateTime updatedAt;

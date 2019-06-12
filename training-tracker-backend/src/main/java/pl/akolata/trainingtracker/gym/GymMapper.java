@@ -4,5 +4,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 interface GymMapper {
-    GymDto fromEntity(Gym gym);
+    GymDto toGymDto(Gym gym);
 }
