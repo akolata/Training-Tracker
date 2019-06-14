@@ -19,11 +19,13 @@ class TrainingsController extends BaseApiController {
 
     private static final String TRAININGS_URL = "/trainings";
 
-    private final TrainingsApiService trainingsService;
+    private final TrainingsFacade trainingsFacade;
+    private final TrainingEntityMapper entityMapper;
 
     @Autowired
-    TrainingsController(TrainingsApiService trainingsService) {
-        this.trainingsService = trainingsService;
+    TrainingsController(TrainingsFacade trainingsFacade, TrainingEntityMapper entityMapper) {
+        this.trainingsFacade = trainingsFacade;
+        this.entityMapper = entityMapper;
     }
 
     @Secured("ROLE_ADMIN")
@@ -34,7 +36,7 @@ class TrainingsController extends BaseApiController {
     )
     ResponseEntity<ApiResponse<TrainingApiDto>> addTraining(@RequestBody @Valid CreateTrainingRequest request) {
         CreateTrainingCommand command = createCommand(request);
-        TrainingApiDto training = trainingsService.createTraining(command);
+        Training training = trainingsFacade.createTraining(command);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
@@ -42,9 +44,10 @@ class TrainingsController extends BaseApiController {
                 .buildAndExpand(training.getId())
                 .toUri();
 
+        TrainingApiDto apiDto = entityMapper.toApiDto(training);
         return ResponseEntity
                 .created(location)
-                .body(ApiResponse.success(training));
+                .body(ApiResponse.success(apiDto));
     }
 
     private CreateTrainingCommand createCommand(CreateTrainingRequest request) {
