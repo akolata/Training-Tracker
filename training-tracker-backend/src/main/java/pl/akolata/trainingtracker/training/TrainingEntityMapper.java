@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.akolata.trainingtracker.shared.service.BaseEntityMapper;
 
 @Component
-class TrainingEntityMapper implements BaseEntityMapper<Training, TrainingDto, TrainingApiDto> {
+public class TrainingEntityMapper implements BaseEntityMapper<Training, TrainingDto, TrainingApiDto> {
 
     private final TrainingMapper trainingMapper;
 

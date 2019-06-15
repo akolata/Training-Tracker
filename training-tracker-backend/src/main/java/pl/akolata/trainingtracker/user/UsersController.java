@@ -8,23 +8,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.akolata.trainingtracker.shared.BaseApiController;
-import pl.akolata.trainingtracker.training.CreateTrainingCommand;
-import pl.akolata.trainingtracker.training.Training;
-import pl.akolata.trainingtracker.training.TrainingsFacade;
+import pl.akolata.trainingtracker.training.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 class UsersController extends BaseApiController {
 
-    private static final String USER_TRAININGS_URL = "/users/{id}/trainings";
+    private static final String USER_TRAININGS_URL = "/users/{userId}/trainings";
+    private static final String USER_TRAINING_URL = "/users/{userId}/trainings/{trainingId}";
+
     private final UserFacade userFacade;
     private final TrainingsFacade trainingsFacade;
+    private final TrainingEntityMapper trainingMapper;
 
     @Autowired
-    UsersController(UserFacade userFacade, TrainingsFacade trainingsFacade) {
+    UsersController(UserFacade userFacade, TrainingsFacade trainingsFacade, TrainingEntityMapper trainingMapper) {
         this.userFacade = userFacade;
         this.trainingsFacade = trainingsFacade;
+        this.trainingMapper = trainingMapper;
     }
 
     @PostMapping(
@@ -32,12 +35,17 @@ class UsersController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity addTraining(@PathVariable Long id, @Valid @RequestBody CreateUserTrainingRequest request) {
-        CreateTrainingCommand command = addTrainingRequestToCommand(request, id);
+    ResponseEntity addTraining(@PathVariable Long userId, @Valid @RequestBody CreateUserTrainingRequest request) {
+        CreateTrainingCommand command = addTrainingRequestToCommand(request, userId);
         Training training = trainingsFacade.createTraining(command);
-        User user = userFacade.addTrainingToUser(training);
-        // TODO return user
-        return ResponseEntity.ok("");
+        userFacade.addTrainingToUser(training);
+
+        URI location = getResourceLocation(API_URL + USER_TRAINING_URL, userId, training.getId());
+        TrainingApiDto trainingApiDto = trainingMapper.toApiDto(training);
+
+        return ResponseEntity
+                .created(location)
+                .body(trainingApiDto);
     }
 
     private CreateTrainingCommand addTrainingRequestToCommand(CreateUserTrainingRequest request, Long userId) {
