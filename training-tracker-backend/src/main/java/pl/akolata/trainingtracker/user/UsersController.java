@@ -1,12 +1,12 @@
 package pl.akolata.trainingtracker.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.akolata.trainingtracker.shared.ApiResponse;
 import pl.akolata.trainingtracker.shared.BaseApiController;
 import pl.akolata.trainingtracker.training.*;
 
@@ -39,7 +39,7 @@ class UsersController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity addTraining(@PathVariable Long userId, @Valid @RequestBody CreateUserTrainingRequest request) {
+    ResponseEntity<ApiResponse<TrainingApiDto>> addTraining(@PathVariable Long userId, @Valid @RequestBody CreateUserTrainingRequest request) {
         CreateTrainingCommand command = addTrainingRequestToCommand(request, userId);
         Training training = trainingsFacade.createTraining(command);
         userFacade.addTrainingToUser(training);
@@ -49,7 +49,19 @@ class UsersController extends BaseApiController {
 
         return ResponseEntity
                 .created(location)
-                .body(trainingApiDto);
+                .body(ApiResponse.success(trainingApiDto));
+    }
+
+    @GetMapping(
+            path = USER_TRAININGS_URL,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    ResponseEntity<ApiResponse<Page<TrainingApiDto>>> getUserTrainings(@PathVariable Long userId, Pageable pageable) {
+        Page<Training> trainings = trainingsFacade.findTraingsByUserId(userId, pageable != null ? pageable : getDefaultPageable());
+        Page<TrainingApiDto> trainingsPage = trainings.map(trainingMapper::toApiDto);
+
+        return ResponseEntity
+                .ok(ApiResponse.success(trainingsPage));
     }
 
     @PostMapping(
@@ -57,8 +69,8 @@ class UsersController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity addTrainingSet(@PathVariable Long userId, @PathVariable Long trainingId,
-                                  @Valid @RequestBody CreateUserTrainingSetRequest request) {
+    ResponseEntity<ApiResponse<TrainingSetDto>> addTrainingSet(@PathVariable Long userId, @PathVariable Long trainingId,
+                                                               @Valid @RequestBody CreateUserTrainingSetRequest request) {
         CreateTrainingSetCommand command = addTrainingSetRequestToCommand(request, trainingId);
         TrainingSet trainingSet = trainingsFacade.addSetToTraining(command);
         URI location = getResourceLocation(USER_TRAININGS_SET_URL, userId, trainingId, trainingSet.getId());
@@ -66,7 +78,7 @@ class UsersController extends BaseApiController {
 
         return ResponseEntity
                 .created(location)
-                .body(trainingSetDto);
+                .body(ApiResponse.success(trainingSetDto));
     }
 
     private CreateTrainingCommand addTrainingRequestToCommand(CreateUserTrainingRequest request, Long userId) {

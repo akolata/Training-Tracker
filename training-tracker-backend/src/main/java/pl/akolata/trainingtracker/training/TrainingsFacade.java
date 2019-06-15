@@ -1,9 +1,13 @@
 package pl.akolata.trainingtracker.training;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import pl.akolata.trainingtracker.shared.ValidationResult;
 import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
+
+import java.util.Objects;
 
 @Component
 public class TrainingsFacade {
@@ -33,5 +37,10 @@ public class TrainingsFacade {
         }
 
         return trainingsService.addTrainingSetToTraining(command);
+    }
+
+    public Page<Training> findTraingsByUserId(Long userId, Pageable pageable) {
+        Objects.requireNonNull(userId);
+        return trainingsService.findTrainingsByUserId(userId, pageable);
     }
 }

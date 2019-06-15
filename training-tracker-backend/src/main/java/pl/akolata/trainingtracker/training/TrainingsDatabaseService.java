@@ -1,6 +1,8 @@
 package pl.akolata.trainingtracker.training;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.akolata.trainingtracker.exercise.Exercise;
@@ -8,14 +10,8 @@ import pl.akolata.trainingtracker.exercise.ExerciseFacade;
 import pl.akolata.trainingtracker.gym.GymFacade;
 import pl.akolata.trainingtracker.user.UserFacade;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 @Service
 class TrainingsDatabaseService implements TrainingsService {
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private final GymFacade gymFacade;
     private final UserFacade userFacade;
@@ -53,8 +49,13 @@ class TrainingsDatabaseService implements TrainingsService {
         TrainingSet trainingSet = trainingSetEntityFromCommand(command);
         training.addTrainingSet(trainingSet);
         training = trainingsRepository.saveAndFlush(training);
-        TrainingSet ts2 = training.getSets().stream().filter(ts -> ts.equals(trainingSet)).findFirst().get();
-        return ts2;
+        TrainingSet savedSet = training.getSets().stream().filter(ts -> ts.equals(trainingSet)).findFirst().get();
+        return savedSet;
+    }
+
+    @Override
+    public Page<Training> findTrainingsByUserId(Long userId, Pageable pageable) {
+        return trainingsRepository.findAllByUserId(userId, pageable);
     }
 
     private Training trainingEntityFromCommand(CreateTrainingCommand command) {
