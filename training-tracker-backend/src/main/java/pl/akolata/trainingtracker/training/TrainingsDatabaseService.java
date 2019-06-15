@@ -8,8 +8,14 @@ import pl.akolata.trainingtracker.exercise.ExerciseFacade;
 import pl.akolata.trainingtracker.gym.GymFacade;
 import pl.akolata.trainingtracker.user.UserFacade;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Service
 class TrainingsDatabaseService implements TrainingsService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final GymFacade gymFacade;
     private final UserFacade userFacade;
@@ -42,12 +48,13 @@ class TrainingsDatabaseService implements TrainingsService {
 
     @Transactional
     @Override
-    public Training addTrainingSetToTraining(CreateTrainingSetCommand command) {
+    public TrainingSet addTrainingSetToTraining(CreateTrainingSetCommand command) {
         Training training = findTrainingById(command.getTrainingId());
         TrainingSet trainingSet = trainingSetEntityFromCommand(command);
         training.addTrainingSet(trainingSet);
-
-        return trainingsRepository.saveAndFlush(training);
+        training = trainingsRepository.saveAndFlush(training);
+        TrainingSet ts2 = training.getSets().stream().filter(ts -> ts.equals(trainingSet)).findFirst().get();
+        return ts2;
     }
 
     private Training trainingEntityFromCommand(CreateTrainingCommand command) {

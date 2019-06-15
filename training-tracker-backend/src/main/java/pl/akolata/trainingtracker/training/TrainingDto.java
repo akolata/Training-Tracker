@@ -6,6 +6,7 @@ import pl.akolata.trainingtracker.gym.GymDto;
 import pl.akolata.trainingtracker.shared.dto.BaseDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -15,5 +16,5 @@ class TrainingDto extends BaseDto {
     private LocalDate date;
     private GymDto gym;
     private Long userId;
-    // TODO add sets
+    private List<TrainingSetDto> sets;
 }

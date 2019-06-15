@@ -5,5 +5,5 @@ interface TrainingsService {
 
     Training findTrainingById(Long id);
 
-    Training addTrainingSetToTraining(CreateTrainingSetCommand command);
+    TrainingSet addTrainingSetToTraining(CreateTrainingSetCommand command);
 }

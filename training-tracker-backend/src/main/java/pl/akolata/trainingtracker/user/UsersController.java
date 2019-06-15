@@ -19,16 +19,19 @@ class UsersController extends BaseApiController {
     private static final String USER_TRAININGS_URL = "/users/{userId}/trainings";
     private static final String USER_TRAINING_URL = "/users/{userId}/trainings/{trainingId}";
     private static final String USER_TRAININGS_SETS_URL = "/users/{userId}/trainings/{trainingId}/sets";
+    private static final String USER_TRAININGS_SET_URL = "/users/{userId}/trainings/{trainingId}/sets/{setId}";
 
     private final UserFacade userFacade;
     private final TrainingsFacade trainingsFacade;
     private final TrainingEntityMapper trainingMapper;
+    private final TrainingSetEntityMapper trainingSetEntityMapper;
 
     @Autowired
-    UsersController(UserFacade userFacade, TrainingsFacade trainingsFacade, TrainingEntityMapper trainingMapper) {
+    UsersController(UserFacade userFacade, TrainingsFacade trainingsFacade, TrainingEntityMapper trainingMapper, TrainingSetEntityMapper trainingSetEntityMapper) {
         this.userFacade = userFacade;
         this.trainingsFacade = trainingsFacade;
         this.trainingMapper = trainingMapper;
+        this.trainingSetEntityMapper = trainingSetEntityMapper;
     }
 
     @PostMapping(
@@ -57,15 +60,13 @@ class UsersController extends BaseApiController {
     ResponseEntity addTrainingSet(@PathVariable Long userId, @PathVariable Long trainingId,
                                   @Valid @RequestBody CreateUserTrainingSetRequest request) {
         CreateTrainingSetCommand command = addTrainingSetRequestToCommand(request, trainingId);
-        Training training = trainingsFacade.addSetToTraining(command);
-        // TODO training id is not needed
-        // TODO validate if user is an owner of this training
-        URI location = getResourceLocation(USER_TRAINING_URL, userId, training.getId());
-        TrainingApiDto trainingApiDto = trainingMapper.toApiDto(training);
+        TrainingSet trainingSet = trainingsFacade.addSetToTraining(command);
+        URI location = getResourceLocation(USER_TRAININGS_SET_URL, userId, trainingId, trainingSet.getId());
+        TrainingSetDto trainingSetDto = trainingSetEntityMapper.toDto(trainingSet);
 
         return ResponseEntity
                 .created(location)
-                .body(trainingApiDto);
+                .body(trainingSetDto);
     }
 
     private CreateTrainingCommand addTrainingRequestToCommand(CreateUserTrainingRequest request, Long userId) {
