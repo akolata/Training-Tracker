@@ -45,11 +45,12 @@ public class Training extends BaseEntity {
             foreignKey = @ForeignKey(name = "FK_TRAINING_USER_ID")
     )
     @Getter
+    @ToString.Exclude
     private User user;
 
     @OneToMany(
             mappedBy = "training",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
     private Set<TrainingSet> sets = new HashSet<>();

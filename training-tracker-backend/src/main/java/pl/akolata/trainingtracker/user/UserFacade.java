@@ -30,7 +30,7 @@ public class UserFacade {
         return userService.addTrainingToUser(training);
     }
 
-    User getCurrentUser() {
+    public User getCurrentUser() {
         UserPrincipal principal = securityFacade.getUserPrincipal();
         return getUserById(principal.getId());
     }

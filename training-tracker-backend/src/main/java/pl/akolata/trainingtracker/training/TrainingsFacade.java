@@ -25,4 +25,13 @@ public class TrainingsFacade {
 
         return trainingsService.createTraining(command);
     }
+
+    public Training addSetToTraining(CreateTrainingSetCommand command) {
+        ValidationResult validationResult = validationService.validateCreateTrainingSetCommand(command);
+        if (validationResult.notValid()) {
+            throw new ResourceCreationFailureException(validationResult.getErrorMsg());
+        }
+
+        return trainingsService.addTrainingSetToTraining(command);
+    }
 }

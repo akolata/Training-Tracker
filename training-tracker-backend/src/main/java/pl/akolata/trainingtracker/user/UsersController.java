@@ -18,6 +18,7 @@ class UsersController extends BaseApiController {
 
     private static final String USER_TRAININGS_URL = "/users/{userId}/trainings";
     private static final String USER_TRAINING_URL = "/users/{userId}/trainings/{trainingId}";
+    private static final String USER_TRAININGS_SETS_URL = "/users/{userId}/trainings/{trainingId}/sets";
 
     private final UserFacade userFacade;
     private final TrainingsFacade trainingsFacade;
@@ -48,6 +49,25 @@ class UsersController extends BaseApiController {
                 .body(trainingApiDto);
     }
 
+    @PostMapping(
+            path = USER_TRAININGS_SETS_URL,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    ResponseEntity addTrainingSet(@PathVariable Long userId, @PathVariable Long trainingId,
+                                  @Valid @RequestBody CreateUserTrainingSetRequest request) {
+        CreateTrainingSetCommand command = addTrainingSetRequestToCommand(request, trainingId);
+        Training training = trainingsFacade.addSetToTraining(command);
+        // TODO training id is not needed
+        // TODO validate if user is an owner of this training
+        URI location = getResourceLocation(USER_TRAINING_URL, userId, training.getId());
+        TrainingApiDto trainingApiDto = trainingMapper.toApiDto(training);
+
+        return ResponseEntity
+                .created(location)
+                .body(trainingApiDto);
+    }
+
     private CreateTrainingCommand addTrainingRequestToCommand(CreateUserTrainingRequest request, Long userId) {
         return new CreateTrainingCommand(
                 request.getDate(),
@@ -55,6 +75,19 @@ class UsersController extends BaseApiController {
                 userId,
                 request.getAdditionalInfo(),
                 request.getName()
+        );
+    }
+
+    private CreateTrainingSetCommand addTrainingSetRequestToCommand(CreateUserTrainingSetRequest request, Long trainingId) {
+        return new CreateTrainingSetCommand(
+                request.getExerciseId(),
+                trainingId,
+                request.getReps(),
+                request.getWeightInKg(),
+                request.getCalories(),
+                request.getDurationInMinutes(),
+                request.getDistanceInKm(),
+                request.getAdditionalInfo()
         );
     }
 }
