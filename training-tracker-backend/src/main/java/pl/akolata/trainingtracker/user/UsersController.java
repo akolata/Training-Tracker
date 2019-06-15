@@ -40,7 +40,7 @@ class UsersController extends BaseApiController {
         Training training = trainingsFacade.createTraining(command);
         userFacade.addTrainingToUser(training);
 
-        URI location = getResourceLocation(API_URL + USER_TRAINING_URL, userId, training.getId());
+        URI location = getResourceLocation(USER_TRAINING_URL, userId, training.getId());
         TrainingApiDto trainingApiDto = trainingMapper.toApiDto(training);
 
         return ResponseEntity

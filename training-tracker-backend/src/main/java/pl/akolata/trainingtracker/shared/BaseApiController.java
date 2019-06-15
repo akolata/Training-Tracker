@@ -20,10 +20,10 @@ public class BaseApiController {
         return PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
     }
 
-    protected URI getResourceLocation(String path, Object... uriVariables) {
+    protected URI getResourceLocation(String pathWithoutApiPrefix, Object... uriVariables) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path(path)
+                .path(API_URL + pathWithoutApiPrefix)
                 .buildAndExpand(uriVariables)
                 .toUri();
     }
