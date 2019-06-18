@@ -6,6 +6,6 @@ import pl.akolata.trainingtracker.shared.dto.BaseApiDto;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-class TrainingApiDto extends BaseApiDto {
+public class TrainingApiDto extends BaseApiDto {
     private final TrainingDto training;
 }

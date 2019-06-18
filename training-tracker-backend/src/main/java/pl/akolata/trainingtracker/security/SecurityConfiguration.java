@@ -73,6 +73,8 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
                 .permitAll()
+                .antMatchers("/api/user/{userId}/**")
+                .access("@userSecurityHelper.hasUserId(authentication, #userId)")
                 .anyRequest()
                 .authenticated();
 

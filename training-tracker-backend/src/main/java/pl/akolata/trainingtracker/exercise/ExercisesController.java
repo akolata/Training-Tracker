@@ -11,9 +11,11 @@ import pl.akolata.trainingtracker.shared.ApiResponse;
 import pl.akolata.trainingtracker.shared.BaseApiController;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 class ExercisesController extends BaseApiController {
+    private static final String EXERCISE_URL = "/exercises/{exerciseId}";
     private static final String EXERCISES_URL = "/exercises";
 
     private final ExercisesApiService exercisesService;
@@ -31,7 +33,11 @@ class ExercisesController extends BaseApiController {
     ResponseEntity<ApiResponse<ExerciseApiDto>> addExercise(@Valid @RequestBody CreateExerciseRequest request) {
         CreateExerciseCommand command = new CreateExerciseCommand(request.getName(), request.getType());
         ExerciseApiDto exercise = exercisesService.createExercise(command);
-        return ResponseEntity.ok(ApiResponse.success(exercise));
+        URI location = getResourceLocation(EXERCISE_URL, exercise.getExercise().getId());
+
+        return ResponseEntity
+                .created(location)
+                .body(ApiResponse.success(exercise));
     }
 
     @GetMapping(
@@ -44,11 +50,11 @@ class ExercisesController extends BaseApiController {
     }
 
     @GetMapping(
-            path = EXERCISES_URL + "/{id}",
+            path = EXERCISE_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<ExerciseApiDto>> getExercise(@PathVariable Long id) {
-        ExerciseApiDto exercise = exercisesService.findExerciseById(id);
+    ResponseEntity<ApiResponse<ExerciseApiDto>> getExercise(@PathVariable Long exerciseId) {
+        ExerciseApiDto exercise = exercisesService.findExerciseById(exerciseId);
         return ResponseEntity.ok(ApiResponse.success(exercise));
     }
 }

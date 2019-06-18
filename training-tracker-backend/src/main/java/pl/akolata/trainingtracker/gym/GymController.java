@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.akolata.trainingtracker.shared.ApiResponse;
 import pl.akolata.trainingtracker.shared.BaseApiController;
 
@@ -17,7 +16,8 @@ import java.net.URI;
 @RestController
 @Slf4j
 class GymController extends BaseApiController {
-    private static final String GYM_URL = "/gyms";
+    private static final String GYM_URL = "/gyms/{gymId}";
+    private static final String GYMS_URL = "/gyms";
 
     private final GymApiService gymService;
 
@@ -27,19 +27,14 @@ class GymController extends BaseApiController {
     }
 
     @PostMapping(
-            path = GYM_URL,
+            path = GYMS_URL,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     ResponseEntity<ApiResponse<String>> addGym(@Valid @RequestBody CreateGymRequest createGymRequest) {
         CreateGymCommand createGymCommand = new CreateGymCommand(createGymRequest.getName());
         GymApiDto gym = gymService.createGym(createGymCommand);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path(BaseApiController.API_URL + GYM_URL + "/{id}")
-                .buildAndExpand(gym.getId())
-                .toUri();
+        URI location = getResourceLocation(GYM_URL, gym.getGym().getId());
 
         return ResponseEntity
                 .created(location)
@@ -47,7 +42,7 @@ class GymController extends BaseApiController {
     }
 
     @GetMapping(
-            path = GYM_URL,
+            path = GYMS_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     ResponseEntity<ApiResponse<Page<GymApiDto>>> getGyms(Pageable pageable) {
@@ -56,11 +51,11 @@ class GymController extends BaseApiController {
     }
 
     @GetMapping(
-            path = GYM_URL + "/{id}",
+            path = GYM_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long id) {
-        GymApiDto gym = gymService.findGymById(id);
+    ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long gymId) {
+        GymApiDto gym = gymService.findGymById(gymId);
         return ResponseEntity.ok(ApiResponse.success(gym));
     }
 }

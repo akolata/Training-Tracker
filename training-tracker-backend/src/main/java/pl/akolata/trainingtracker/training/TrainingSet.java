@@ -27,6 +27,7 @@ public class TrainingSet extends BaseEntity {
             name = "TRAINING_ID",
             foreignKey = @ForeignKey(name = "FK_TRAINING_SET_TRAINING_ID")
     )
+    @ToString.Exclude
     private Training training;
 
     @Column

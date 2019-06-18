@@ -6,7 +6,7 @@ import pl.akolata.trainingtracker.shared.dto.BaseDto;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-class ExerciseDto extends BaseDto {
+public class ExerciseDto extends BaseDto {
     private String name;
     private ExerciseType type;
 }

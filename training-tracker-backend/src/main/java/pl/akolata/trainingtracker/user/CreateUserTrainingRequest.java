@@ -1,14 +1,16 @@
-package pl.akolata.trainingtracker.training;
+package pl.akolata.trainingtracker.user;
 
-import lombok.Value;
+import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Value
-public class CreateTrainingCommand {
+@Data
+class CreateUserTrainingRequest {
+
+    @NotNull
     private final LocalDate date;
     private final Long gymId;
-    private final Long userId;
     private final String additionalInfo;
     private final String name;
 }
