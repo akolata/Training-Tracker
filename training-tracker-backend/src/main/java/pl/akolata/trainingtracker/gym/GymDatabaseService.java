@@ -5,14 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
-
-import java.util.Objects;
 
 @Service
 class GymDatabaseService implements GymService {
-
-    private static final String DUPLICATED_GYM_MSG = "Gym with name '%s' already exists";
 
     private final GymRepository gymRepository;
 
@@ -24,24 +19,22 @@ class GymDatabaseService implements GymService {
     @Transactional
     @Override
     public Gym createGym(CreateGymCommand command) {
-        Objects.requireNonNull(command);
-
-        if (gymRepository.existsByName(command.getName())) {
-            throw new ResourceCreationFailureException(String.format(DUPLICATED_GYM_MSG, command.getName()));
-        }
-
         return gymRepository.saveAndFlush(command.toGym());
     }
 
     @Override
     public Page<Gym> findGyms(Pageable pageable) {
-        Objects.requireNonNull(pageable);
         return gymRepository.findAll(pageable);
     }
 
     @Override
     public Gym findGymById(Long id) {
-        Objects.requireNonNull(id);
         return gymRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public boolean existsByName(String name) {
+        return gymRepository.existsByName(name);
     }
 }
