@@ -36,7 +36,7 @@ class TrainingsValidationService {
         Long gymId = command.getGymId();
         Long userId = command.getUserId();
 
-        if (gymId != null && gymFacade.getGymById(gymId) == null) {
+        if (gymId != null && gymFacade.findGymById(gymId) == null) {
             return ValidationResult.invalid("There is no gym with id " + gymId);
         }
 
