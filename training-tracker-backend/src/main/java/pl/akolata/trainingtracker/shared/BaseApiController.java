@@ -11,7 +11,8 @@ import java.net.URI;
 @RequestMapping(value = BaseApiController.API_URL)
 public class BaseApiController {
 
-    protected static final String API_URL = "/api";
+    static final String API_URL = "/api";
+    protected final String USER_URL = "/users/{userId}";
 
     protected BaseApiController() {
     }

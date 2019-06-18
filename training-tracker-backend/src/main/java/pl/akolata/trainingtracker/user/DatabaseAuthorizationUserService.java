@@ -1,4 +1,4 @@
-package pl.akolata.trainingtracker.authorization;
+package pl.akolata.trainingtracker.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.akolata.trainingtracker.shared.exception.AppException;
-import pl.akolata.trainingtracker.user.*;
+import pl.akolata.trainingtracker.shared.exception.UserSignUpException;
 
 import java.util.Collections;
 
@@ -15,11 +15,11 @@ import java.util.Collections;
 class DatabaseAuthorizationUserService implements AuthorizationUserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DatabaseAuthorizationUserService(
+    DatabaseAuthorizationUserService(
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             RoleRepository roleRepository) {
@@ -30,22 +30,21 @@ class DatabaseAuthorizationUserService implements AuthorizationUserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
-    public User registerUser(SignUpRequest signUpRequest) throws UserRegistrationFailureException {
-
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new UserRegistrationFailureException("Username", "Username is already taken!");
+    public User signUp(SignUpCommand command) throws UserSignUpException {
+        if (userRepository.existsByUsername(command.getUsername())) {
+            throw new UserSignUpException("Username", "Username is already taken!");
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new UserRegistrationFailureException("Email", "Email already in use!");
+        if (userRepository.existsByEmail(command.getEmail())) {
+            throw new UserSignUpException("Email", "Email already in use!");
         }
 
-        return userRepository.saveAndFlush(createUser(signUpRequest));
+        return userRepository.saveAndFlush(createUser(command));
     }
 
-    private User createUser(SignUpRequest signUpRequest) {
-        User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getUsername(),
-                signUpRequest.getEmail(), signUpRequest.getPassword());
+    private User createUser(SignUpCommand command) {
+        User user = new User(command.getFirstName(), command.getLastName(), command.getUsername(),
+                command.getEmail(), command.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.akolata.trainingtracker.IntegrationTestBase;
 import pl.akolata.trainingtracker.Tags;
 import pl.akolata.trainingtracker.shared.exception.AppException;
+import pl.akolata.trainingtracker.shared.exception.UserSignUpException;
 import pl.akolata.trainingtracker.user.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +69,7 @@ class DatabaseAuthorizationUserServiceTest extends IntegrationTestBase {
             SignUpRequest req = buildSignUpRequest(USERNAME, "not" + EMAIL);
 
             // then
-            assertThrows(UserRegistrationFailureException.class, () -> authorizationService.registerUser(req));
+            assertThrows(UserSignUpException.class, () -> authorizationService.registerUser(req));
         }
 
         @Test
@@ -79,12 +80,12 @@ class DatabaseAuthorizationUserServiceTest extends IntegrationTestBase {
             SignUpRequest req = buildSignUpRequest("not" + USERNAME, EMAIL);
 
             // then
-            assertThrows(UserRegistrationFailureException.class, () -> authorizationService.registerUser(req));
+            assertThrows(UserSignUpException.class, () -> authorizationService.registerUser(req));
         }
 
         @Test
         @DisplayName("user should be created in the database")
-        void register_whenUsernameAndEmailAreUnique_thenUserWillBeCreated() throws UserRegistrationFailureException {
+        void register_whenUsernameAndEmailAreUnique_thenUserWillBeCreated() throws UserSignUpException {
             // given
             setUpUserInDatabase();
             SignUpRequest req = buildSignUpRequest("not" + USERNAME, "not" + EMAIL);

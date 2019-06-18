@@ -15,11 +15,9 @@ import pl.akolata.trainingtracker.shared.ApiResponse;
 import pl.akolata.trainingtracker.shared.ValidationErrorsResponse;
 import pl.akolata.trainingtracker.shared.exception.ResourceCreationFailureException;
 import pl.akolata.trainingtracker.shared.exception.ResourceNotFoundException;
+import pl.akolata.trainingtracker.shared.exception.UserSignUpException;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 @Slf4j
@@ -40,15 +38,30 @@ class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ApiResponse<>(false, errorsResponse), headers, status);
     }
 
+    @ExceptionHandler(value = UserSignUpException.class)
+    ResponseEntity<ApiResponse<ValidationErrorsResponse>> handleSignUpFailure(UserSignUpException e) {
+        log.debug("Exception {} handled", UserSignUpException.class);
+        ValidationErrorsResponse errorsResponse = new ValidationErrorsResponse();
+        List<String> errorsList = Collections.singletonList(e.getMessage());
+        errorsResponse.getErrors().put(e.getField(), errorsList);
+        return ResponseEntity
+                .badRequest()
+                .body(new ApiResponse<>(false, errorsResponse));
+    }
+
     @ExceptionHandler({ResourceNotFoundException.class})
     ResponseEntity handleResourceNotFound(ResourceNotFoundException e) {
         log.debug("Exception {} handled, reason: {}", ResourceNotFoundException.class.getSimpleName(), e.getMessage());
-        return ResponseEntity.notFound().build();
+        return ResponseEntity
+                .notFound()
+                .build();
     }
 
     @ExceptionHandler({ResourceCreationFailureException.class})
     ResponseEntity<ApiResponse<String>> handleResourceCreationFailure(ResourceCreationFailureException e) {
         log.debug("Exception {} handled, reason: {}", ResourceCreationFailureException.class.getSimpleName(), e.getMessage());
-        return ResponseEntity.badRequest().body(ApiResponse.failure(e.getMessage()));
+        return ResponseEntity
+                .badRequest()
+                .body(ApiResponse.failure(e.getMessage()));
     }
 }
