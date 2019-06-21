@@ -19,13 +19,11 @@ class TrainingsController extends BaseApiController {
     private static final String TRAINING_URL = "/trainings/{trainingId}";
     private static final String TRAININGS_URL = "/trainings";
 
-    private final TrainingsFacade trainingsFacade;
-    private final TrainingEntityMapper entityMapper;
+    private final TrainingApiService apiService;
 
     @Autowired
-    TrainingsController(TrainingsFacade trainingsFacade, TrainingEntityMapper entityMapper) {
-        this.trainingsFacade = trainingsFacade;
-        this.entityMapper = entityMapper;
+    TrainingsController(TrainingApiService apiService) {
+        this.apiService = apiService;
     }
 
     @Secured("ROLE_ADMIN")
@@ -34,24 +32,11 @@ class TrainingsController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<TrainingApiDto>> addTraining(@RequestBody @Valid CreateTrainingRequest request) {
-        CreateTrainingCommand command = createCommand(request);
-        Training training = trainingsFacade.createTraining(command);
+    ResponseEntity<ApiResponse<TrainingDto>> addTraining(@RequestBody @Valid CreateTrainingRequest request) {
+        TrainingDto training = apiService.createTraining(request);
         URI location = getResourceLocation(TRAINING_URL, training.getId());
-
-        TrainingApiDto apiDto = entityMapper.toApiDto(training);
         return ResponseEntity
                 .created(location)
-                .body(ApiResponse.success(apiDto));
-    }
-
-    private CreateTrainingCommand createCommand(CreateTrainingRequest request) {
-        return new CreateTrainingCommand(
-                request.getDate(),
-                request.getGymId(),
-                request.getUserId(),
-                request.getAdditionalInfo(),
-                request.getName()
-        );
+                .body(ApiResponse.success(training));
     }
 }

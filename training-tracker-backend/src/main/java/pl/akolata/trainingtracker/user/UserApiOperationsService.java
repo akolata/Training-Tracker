@@ -11,26 +11,26 @@ class UserApiOperationsService {
 
     private final UserFacade userFacade;
     private final TrainingsFacade trainingsFacade;
-    private final TrainingEntityMapper trainingMapper;
+    private final TrainingMapper trainingMapper;
     private final TrainingSetEntityMapper trainingSetEntityMapper;
 
     @Autowired
-    UserApiOperationsService(TrainingsFacade trainingsFacade, UserFacade userFacade, TrainingEntityMapper trainingMapper, TrainingSetEntityMapper trainingSetEntityMapper) {
+    UserApiOperationsService(TrainingsFacade trainingsFacade, UserFacade userFacade, TrainingMapper trainingMapper, TrainingSetEntityMapper trainingSetEntityMapper) {
         this.trainingsFacade = trainingsFacade;
         this.userFacade = userFacade;
         this.trainingMapper = trainingMapper;
         this.trainingSetEntityMapper = trainingSetEntityMapper;
     }
 
-    TrainingApiDto addTrainingToUser(CreateTrainingCommand command, Long userId) {
+    TrainingDto addTrainingToUser(CreateTrainingCommand command, Long userId) {
         Training training = trainingsFacade.createTraining(command);
         userFacade.addTrainingToUser(training);
-        return trainingMapper.toApiDto(training);
+        return trainingMapper.toTrainingDto(training);
     }
 
-    Page<TrainingApiDto> getUserTrainings(Long userId, Pageable pageable) {
+    Page<TrainingDto> getUserTrainings(Long userId, Pageable pageable) {
         Page<Training> trainingsPage = trainingsFacade.findTraingsByUserId(userId, pageable);
-        return trainingsPage.map(trainingMapper::toApiDto);
+        return trainingsPage.map(trainingMapper::toTrainingDto);
     }
 
     TrainingSetDto addTrainingSetToUserTraining(CreateTrainingSetCommand command) {

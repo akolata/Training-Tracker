@@ -10,7 +10,7 @@ import pl.akolata.trainingtracker.shared.ApiResponse;
 import pl.akolata.trainingtracker.shared.BaseApiController;
 import pl.akolata.trainingtracker.training.CreateTrainingCommand;
 import pl.akolata.trainingtracker.training.CreateTrainingSetCommand;
-import pl.akolata.trainingtracker.training.TrainingApiDto;
+import pl.akolata.trainingtracker.training.TrainingDto;
 import pl.akolata.trainingtracker.training.TrainingSetDto;
 
 import javax.validation.Valid;
@@ -38,9 +38,9 @@ class UsersController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<TrainingApiDto>> addTraining(@PathVariable Long userId, @Valid @RequestBody CreateUserTrainingRequest request) {
+    ResponseEntity<ApiResponse<TrainingDto>> addTraining(@PathVariable Long userId, @Valid @RequestBody CreateUserTrainingRequest request) {
         CreateTrainingCommand command = toCommandsConverter.addTrainingRequestToCommand(request, userId);
-        TrainingApiDto trainingApiDto = apiOperationsService.addTrainingToUser(command, userId);
+        TrainingDto trainingApiDto = apiOperationsService.addTrainingToUser(command, userId);
         URI location = getResourceLocation(USER_TRAINING_URL, userId, trainingApiDto.getId());
 
         return ResponseEntity
@@ -52,8 +52,8 @@ class UsersController extends BaseApiController {
             path = USER_TRAININGS_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<Page<TrainingApiDto>>> getUserTrainings(@PathVariable Long userId, Pageable pageable) {
-        Page<TrainingApiDto> trainingsPage = apiOperationsService.getUserTrainings(userId, getPageable(pageable));
+    ResponseEntity<ApiResponse<Page<TrainingDto>>> getUserTrainings(@PathVariable Long userId, Pageable pageable) {
+        Page<TrainingDto> trainingsPage = apiOperationsService.getUserTrainings(userId, getPageable(pageable));
 
         return ResponseEntity
                 .ok(ApiResponse.success(trainingsPage));
