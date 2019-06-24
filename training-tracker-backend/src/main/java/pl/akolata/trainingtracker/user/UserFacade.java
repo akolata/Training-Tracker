@@ -12,12 +12,18 @@ import java.util.Objects;
 public class UserFacade {
 
     private final UserService userService;
+    private final AuthorizationUserService authorizationUserService;
     private final SecurityFacade securityFacade;
 
     @Autowired
-    public UserFacade(UserService userService, SecurityFacade securityFacade) {
+    public UserFacade(UserService userService, AuthorizationUserService authorizationUserService, SecurityFacade securityFacade) {
         this.userService = userService;
+        this.authorizationUserService = authorizationUserService;
         this.securityFacade = securityFacade;
+    }
+
+    public User signUp(SignUpCommand command) {
+        return authorizationUserService.signUp(command);
     }
 
     public User getUserById(Long id) {

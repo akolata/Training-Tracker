@@ -65,7 +65,7 @@ class TrainingsDatabaseService implements TrainingsService {
         training.setAdditionalInfo(command.getAdditionalInfo());
         training.setDate(command.getDate());
         if (command.getGymId() != null) {
-            training.setGym(gymFacade.getGymById(command.getGymId()));
+            training.setGym(gymFacade.findGymById(command.getGymId()));
         }
         training.setUser(userFacade.getUserById(command.getUserId()));
 

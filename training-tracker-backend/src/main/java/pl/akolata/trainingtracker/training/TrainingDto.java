@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-class TrainingDto extends BaseDto {
+public class TrainingDto extends BaseDto {
     private String name;
     private String additionalInfo;
     private LocalDate date;

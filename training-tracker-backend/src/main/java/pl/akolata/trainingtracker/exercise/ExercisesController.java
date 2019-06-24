@@ -1,6 +1,7 @@
 package pl.akolata.trainingtracker.exercise;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,15 +15,16 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
+@Slf4j
 class ExercisesController extends BaseApiController {
     private static final String EXERCISE_URL = "/exercises/{exerciseId}";
     private static final String EXERCISES_URL = "/exercises";
 
-    private final ExercisesApiService exercisesService;
+    private final ExercisesApiService apiService;
 
     @Autowired
-    ExercisesController(ExercisesApiService exercisesService) {
-        this.exercisesService = exercisesService;
+    ExercisesController(ExercisesApiService apiService) {
+        this.apiService = apiService;
     }
 
     @PostMapping(
@@ -30,10 +32,10 @@ class ExercisesController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<ExerciseApiDto>> addExercise(@Valid @RequestBody CreateExerciseRequest request) {
-        CreateExerciseCommand command = new CreateExerciseCommand(request.getName(), request.getType());
-        ExerciseApiDto exercise = exercisesService.createExercise(command);
-        URI location = getResourceLocation(EXERCISE_URL, exercise.getExercise().getId());
+    ResponseEntity<ApiResponse<ExerciseDto>> addExercise(@Valid @RequestBody CreateExerciseRequest request) {
+        ExerciseDto exercise = apiService.createExercise(request);
+        URI location = getResourceLocation(EXERCISE_URL, exercise.getId());
+        log.debug("Exercise with name {} and type {} created", exercise.getName(), exercise.getType());
 
         return ResponseEntity
                 .created(location)
@@ -44,17 +46,19 @@ class ExercisesController extends BaseApiController {
             path = EXERCISES_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<Page<ExerciseApiDto>>> getExercises(Pageable pageable) {
-        Page<ExerciseApiDto> exercises = exercisesService.findExercises(pageable != null ? pageable : getDefaultPageable());
-        return ResponseEntity.ok(ApiResponse.success(exercises));
+    ResponseEntity<ApiResponse<Page<ExerciseDto>>> getExercises(Pageable pageable) {
+        Page<ExerciseDto> exercises = apiService.findExercises(pageable != null ? pageable : getDefaultPageable());
+        return ResponseEntity
+                .ok(ApiResponse.success(exercises));
     }
 
     @GetMapping(
             path = EXERCISE_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<ExerciseApiDto>> getExercise(@PathVariable Long exerciseId) {
-        ExerciseApiDto exercise = exercisesService.findExerciseById(exerciseId);
-        return ResponseEntity.ok(ApiResponse.success(exercise));
+    ResponseEntity<ApiResponse<ExerciseDto>> getExercise(@PathVariable Long exerciseId) {
+        ExerciseDto exercise = apiService.findExerciseById(exerciseId);
+        return ResponseEntity
+                .ok(ApiResponse.success(exercise));
     }
 }

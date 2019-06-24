@@ -19,11 +19,11 @@ class GymController extends BaseApiController {
     private static final String GYM_URL = "/gyms/{gymId}";
     private static final String GYMS_URL = "/gyms";
 
-    private final GymApiService gymService;
+    private final GymApiService apiService;
 
     @Autowired
-    GymController(GymApiService gymService) {
-        this.gymService = gymService;
+    GymController(GymApiService apiService) {
+        this.apiService = apiService;
     }
 
     @PostMapping(
@@ -31,31 +31,33 @@ class GymController extends BaseApiController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<String>> addGym(@Valid @RequestBody CreateGymRequest createGymRequest) {
-        CreateGymCommand createGymCommand = new CreateGymCommand(createGymRequest.getName());
-        GymApiDto gym = gymService.createGym(createGymCommand);
-        URI location = getResourceLocation(GYM_URL, gym.getGym().getId());
+    ResponseEntity<ApiResponse<GymDto>> addGym(@Valid @RequestBody CreateGymRequest request) {
+        GymDto gym = apiService.createGym(request);
+        URI location = getResourceLocation(GYM_URL, gym.getId());
+        log.debug("Gym with name {} created", gym.getName());
 
         return ResponseEntity
                 .created(location)
-                .body(new ApiResponse<>(true, "Gym created"));
+                .body(new ApiResponse<>(true, gym));
     }
 
     @GetMapping(
             path = GYMS_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<Page<GymApiDto>>> getGyms(Pageable pageable) {
-        Page<GymApiDto> gyms = gymService.findGyms(pageable != null ? pageable : getDefaultPageable());
-        return ResponseEntity.ok(ApiResponse.success(gyms));
+    ResponseEntity<ApiResponse<Page<GymDto>>> getGyms(Pageable pageable) {
+        Page<GymDto> gym = apiService.findGyms(pageable != null ? pageable : getDefaultPageable());
+        return ResponseEntity
+                .ok(ApiResponse.success(gym));
     }
 
     @GetMapping(
             path = GYM_URL,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    ResponseEntity<ApiResponse<GymApiDto>> getGym(@PathVariable Long gymId) {
-        GymApiDto gym = gymService.findGymById(gymId);
-        return ResponseEntity.ok(ApiResponse.success(gym));
+    ResponseEntity<ApiResponse<GymDto>> getGym(@PathVariable Long gymId) {
+        GymDto gym = apiService.findGymById(gymId);
+        return ResponseEntity
+                .ok(ApiResponse.success(gym));
     }
 }

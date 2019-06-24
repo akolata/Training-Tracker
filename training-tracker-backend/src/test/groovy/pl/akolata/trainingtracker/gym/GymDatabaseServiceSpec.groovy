@@ -12,6 +12,9 @@ class GymDatabaseServiceSpec extends BaseSpecification {
     @Autowired
     GymRepository gymRepository
 
+    @Autowired
+    GymFacade gymFacade
+
     def setup() {
         gymRepository.deleteAll()
     }
@@ -22,7 +25,7 @@ class GymDatabaseServiceSpec extends BaseSpecification {
         gymRepository.saveAndFlush(new Gym(name: gymName))
 
         when: "someone will attempt to save a new gym with the same name"
-        gymService.createGym(new CreateGymCommand(gymName))
+        gymFacade.createGym(new CreateGymCommand(gymName))
 
         then: "an exception should be thrown"
         thrown ResourceCreationFailureException

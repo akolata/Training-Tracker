@@ -11,10 +11,10 @@ import javax.persistence.*;
 @Table(
         name = "gym",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UK_NAME", columnNames = "name")
+                @UniqueConstraint(name = "UK_GYM_NAME", columnNames = "name")
         },
         indexes = {
-                @Index(name = "IX_NAME", columnList = "name")
+                @Index(name = "IX_GYM_NAME", columnList = "name")
         }
 )
 @Getter
