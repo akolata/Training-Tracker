@@ -2,6 +2,7 @@ package pl.akolata.trainingtracker.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.akolata.trainingtracker.security.SecurityFacade;
 import pl.akolata.trainingtracker.security.UserPrincipal;
 import pl.akolata.trainingtracker.training.Training;
@@ -22,10 +23,10 @@ class UserDatabaseService implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        Objects.requireNonNull(id);
         return userRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public User addTrainingToUser(Training training) {
         UserPrincipal principal = securityFacade.getUserPrincipal();

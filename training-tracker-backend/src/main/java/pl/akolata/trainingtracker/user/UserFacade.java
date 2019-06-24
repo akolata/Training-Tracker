@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.akolata.trainingtracker.security.SecurityFacade;
 import pl.akolata.trainingtracker.security.UserPrincipal;
-import pl.akolata.trainingtracker.shared.exception.UserSignUpException;
 import pl.akolata.trainingtracker.training.Training;
 
 import java.util.Objects;
@@ -23,7 +22,7 @@ public class UserFacade {
         this.securityFacade = securityFacade;
     }
 
-    public User signUp(SignUpCommand command) throws UserSignUpException {
+    public User signUp(SignUpCommand command) {
         return authorizationUserService.signUp(command);
     }
 
