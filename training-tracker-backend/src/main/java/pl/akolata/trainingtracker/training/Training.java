@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "TRAINING")
+@Table(name = "TT_TRAINING")
 @Setter
 @ToString
 public class Training extends BaseEntity {

@@ -9,12 +9,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(
-        name = "EXERCISE",
+        name = "TT_EXERCISE",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UK_EXERCISE_NAME", columnNames = "name")
-        },
-        indexes = {
-                @Index(name = "IX_EXERCISE_NAME", columnList = "name")
+                @UniqueConstraint(name = "UK_EXERCISE_NAME", columnNames = "NAME")
         }
 )
 @Getter
