@@ -9,7 +9,7 @@ import pl.akolata.trainingtracker.shared.BaseEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TT_TRAINING_SET")
+@Table(name = "TRAINING_SET")
 @Getter
 @Setter
 @ToString

@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(
-        name = "TT_USER",
+        name = "USER",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UK_USER_USERNAME", columnNames = "USERNAME"),
                 @UniqueConstraint(name = "UK_USER_EMAIL", columnNames = "EMAIL")
@@ -51,7 +51,7 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "TT_USER_ROLE",
+            name = "USER_ROLE",
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"),
             foreignKey = @ForeignKey(name = "FK_USER_ROLE"),

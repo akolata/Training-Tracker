@@ -1,7 +1,7 @@
 #######################################################################################################################
 ### TABLES
 #######################################################################################################################
-CREATE TABLE IF NOT EXISTS TT_EXERCISE
+CREATE TABLE IF NOT EXISTS EXERCISE
 (
     ID         BIGINT       NOT NULL AUTO_INCREMENT,
     CREATED_AT DATETIME     NOT NULL,
@@ -17,4 +17,4 @@ CREATE TABLE IF NOT EXISTS TT_EXERCISE
 #######################################################################################################################
 ### INDEXES
 #######################################################################################################################
-CREATE UNIQUE INDEX UK_EXERCISE_NAME on TT_EXERCISE (NAME);
+CREATE UNIQUE INDEX UK_EXERCISE_NAME on EXERCISE (NAME);

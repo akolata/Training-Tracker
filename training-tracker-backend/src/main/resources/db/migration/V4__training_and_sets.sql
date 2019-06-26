@@ -1,7 +1,7 @@
 #######################################################################################################################
 ### TABLES
 #######################################################################################################################
-CREATE TABLE IF NOT EXISTS TT_TRAINING
+CREATE TABLE IF NOT EXISTS TRAINING
 (
     ID              BIGINT      NOT NULL AUTO_INCREMENT,
     CREATED_AT      DATETIME    NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS TT_TRAINING
 ) ENGINE = InnoDB
   DEFAULT CHARSET = UTF8;
 
-CREATE TABLE IF NOT EXISTS TT_TRAINING_SET
+CREATE TABLE IF NOT EXISTS TRAINING_SET
 (
     ID                  BIGINT      NOT NULL AUTO_INCREMENT,
     CREATED_AT          DATETIME    NOT NULL,
@@ -39,22 +39,22 @@ CREATE TABLE IF NOT EXISTS TT_TRAINING_SET
 #######################################################################################################################
 ### INDEXES
 #######################################################################################################################
-ALTER TABLE TT_TRAINING
+ALTER TABLE TRAINING
     ADD CONSTRAINT FK_TRAINING_GYM_ID
         FOREIGN KEY (GYM_ID)
-            REFERENCES TT_GYM (ID);
+            REFERENCES GYM (ID);
 
-ALTER TABLE TT_TRAINING
+ALTER TABLE TRAINING
     ADD CONSTRAINT FK_TRAINING_USER_ID
         FOREIGN KEY (USER_ID)
-            REFERENCES TT_USER (ID);
+            REFERENCES USER (ID);
 
-ALTER TABLE TT_TRAINING_SET
-    add constraint FK_TRAINING_SET_EXERCISE_ID
+ALTER TABLE TRAINING_SET
+    ADD CONSTRAINT FK_TRAINING_SET_EXERCISE_ID
         FOREIGN KEY (EXERCISE_ID)
-            REFERENCES TT_EXERCISE (ID);
+            REFERENCES EXERCISE (ID);
 
-ALTER TABLE TT_TRAINING_SET
+ALTER TABLE TRAINING_SET
     ADD CONSTRAINT FK_TRAINING_SET_TRAINING_ID
         FOREIGN KEY (TRAINING_ID)
-            REFERENCES TT_TRAINING (ID);
+            REFERENCES TRAINING (ID);
