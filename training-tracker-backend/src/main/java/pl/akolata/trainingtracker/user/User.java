@@ -14,14 +14,10 @@ import java.util.Set;
 
 @Entity
 @Table(
-        name = "users",
+        name = "USER",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UK_USERNAME", columnNames = "username"),
-                @UniqueConstraint(name = "UK_EMAIL", columnNames = "email")
-        },
-        indexes = {
-                @Index(name = "IX_EMAIL", columnList = "email"),
-                @Index(name = "IX_USERNAME", columnList = "username")
+                @UniqueConstraint(name = "UK_USER_USERNAME", columnNames = "USERNAME"),
+                @UniqueConstraint(name = "UK_USER_EMAIL", columnNames = "EMAIL")
         }
 )
 @Setter
@@ -55,11 +51,11 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_users")),
-            inverseJoinColumns = @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "FK_roles")),
-            foreignKey = @ForeignKey(name = "FK_users_roles"),
-            inverseForeignKey = @ForeignKey(name = "FK_roles_users"))
+            name = "USER_ROLE",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"),
+            foreignKey = @ForeignKey(name = "FK_USER_ROLE"),
+            inverseForeignKey = @ForeignKey(name = "FK_ROLE_USER"))
     @Getter
     private Set<Role> roles = new HashSet<>();
 

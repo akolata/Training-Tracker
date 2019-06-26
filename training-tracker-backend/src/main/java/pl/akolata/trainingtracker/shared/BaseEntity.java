@@ -27,6 +27,7 @@ public class BaseEntity implements Serializable {
 
     @Version
     @Getter
+    @Column(nullable = false)
     private Timestamp version;
 
     @CreatedDate

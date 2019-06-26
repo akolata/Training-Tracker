@@ -5,16 +5,16 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.akolata.trainingtracker.shared.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-        name = "gym",
+        name = "GYM",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UK_GYM_NAME", columnNames = "name")
-        },
-        indexes = {
-                @Index(name = "IX_GYM_NAME", columnList = "name")
+                @UniqueConstraint(name = "UK_GYM_NAME", columnNames = "NAME")
         }
 )
 @Getter
